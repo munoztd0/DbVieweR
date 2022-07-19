@@ -1,2 +1,2 @@
 # DbVieweR
-Database Management Dashboard
+Database Management Dashboard for PostGresSql 
