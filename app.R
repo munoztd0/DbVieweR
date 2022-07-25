@@ -1,6 +1,6 @@
 library(pacman)
 
-suppressPackageStartupMessages(pacman::p_load(dplyr, DBI, RSQLite, DT, shiny, shinyjs, shinythemes, shinyWidgets, shinydashboard, shinyauthr, shinyFeedback))
+suppressPackageStartupMessages(pacman::p_load(dplyr, stringr, RPostgres,  DBI, RSQLite, DT, shiny, shinyjs, shinythemes, shinyWidgets, shinydashboard, shinyauthr, shinyFeedback))
 
 # dataframe that holds usernames, passwords and other user data
 user_base <- data.frame(
@@ -12,7 +12,15 @@ user_base <- data.frame(
 
 
 # connect to the database
-db <- connect_DB()
+db <-  DBI::dbConnect(
+        drv = RPostgres::Postgres(),
+        dbname = 'postgres',
+        host = "", 
+        port = 5432,
+        user = '', 
+        password = '', 
+        connect_timeout = 3600000
+    )	
 
 
 
@@ -26,10 +34,10 @@ ui <- dashboardPage(
    
     titleWidth = 300,
     tags$li(class = "dropdown",
-            tags$a(img(src = 'https://raw.githubusercontent.com/munoztd0/xaringan/master/logo_plain.png', height = 18),
-                   href = "http://analytics.flowbank.network/",
+            tags$a(img(src = '', height = 18),
+                   href = "",
                    title = "Check out our other Dashboards!") ),
-    title = span("Quant Database Management Dashboard", style = "font-size: 20px"),
+    title = span("Database Viewer", style = "font-size: 20px"),
     # tags$li(class = "dropdown", 
     #         tags$a(icon("github"), 
     #                href = "https://dev.azure.com/FlowBank/Quant%20Reporting/",
@@ -52,7 +60,7 @@ ui <- dashboardPage(
   dashboardBody(
     tags$head(
       tags$link(rel = "shortcut icon", 
-                href = "https://raw.githubusercontent.com/munoztd0/xaringan/master/favicon.ico")
+                href = "")
     ),
     title = "Database Management Dashboard",
     shinyjs::useShinyjs(),
