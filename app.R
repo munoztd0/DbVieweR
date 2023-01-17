@@ -216,25 +216,25 @@ ui <- dashboardPage(
         uiOutput("tab1UI")
       ),
       # Second Tab
-      tabItem(
-        tabName = 'del_table',
-        uiOutput("tab2UI")
-      ),
+      # tabItem(
+      #   tabName = 'del_table',
+      #   uiOutput("tab2UI")
+      # ),
       # Third Tab
-      tabItem(
-        tabName = 'update_table',
-        uiOutput("tab3UI")
-      ),
+      # tabItem(
+      #   tabName = 'update_table',
+      #   uiOutput("tab3UI")
+      # ),
       # fourth Tab
-      tabItem(
-        tabName = 'create_table',
-        uiOutput("tab4UI")
-      ),
+      # tabItem(
+      #   tabName = 'create_table',
+      #   uiOutput("tab4UI")
+      # ),
       # Fifth Tab
-      tabItem(
-        tabName = 'insert_value',
-        uiOutput("tab5UI")
-      ),
+      # tabItem(
+      #   tabName = 'insert_value',
+      #   uiOutput("tab5UI")
+      # ),
       # Sixth Tab
       tabItem(
         tabName = 'about',
