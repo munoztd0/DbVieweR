@@ -15,3 +15,6 @@ Features of this app:
     - Create entries to tables:  prompt columns contained in the selected table together with their types. 
     - Delete tables: the action is only accessible to specific authorization.
 4. Robustness: Defense mechanism that prevents duplicates, invalid expressions, and conflicts with SQL keywords are set for all the input table and colunm names to ensure the smooth execution of SQL queries. Once errors are detected, prompt messages will show up suggesting possible failure reasons. 
+
+
+Check the demo-> http://www.munoztd0.space:3838/apps/DBMS/
