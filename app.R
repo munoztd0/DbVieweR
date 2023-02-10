@@ -1,9 +1,16 @@
-# the necessary packages
-library(pacman)
 
-suppressPackageStartupMessages(pacman::p_load(DBI, RSQLite, DT, shiny, 
-        shinyjs, shinythemes, shinyWidgets, shinydashboard, 
-        shinyauthr, shinyFeedback, stringr))
+require(pacman)
+
+
+#lazy load or install necessary packages
+suppressPackageStartupMessages(
+  pacman::p_load(
+    DBI, dplyr, RSQLite, DT, shiny, shinydashboard,
+    shinyjs, shinythemes, shinyWidgets,
+    shinyauthr, shinyFeedback, sodium
+    )
+  )
+
 
 
 
@@ -162,11 +169,13 @@ sqlite_kw <-
     'WINDOW',
     'WITH',
     'WITHOUT')
+
+
 sqlite_kw_lo <- tolower(sqlite_kw)
 
-# connect to the database
-db <- dbConnect(SQLite(), 'sharks.db') 
-prodtype <- dbGetQuery(db, 'SELECT distinct sharktype from sharks')
+# connect to the apple database
+db <- dbConnect(SQLite(), 'apple2.db') 
+prodtype <- dbGetQuery(db, 'SELECT distinct prod_type from prods_i')
 
 
 ###############################################
@@ -174,7 +183,7 @@ prodtype <- dbGetQuery(db, 'SELECT distinct sharktype from sharks')
 ###############################################
 ui <- dashboardPage(
   title="Database Management Platform",
-  
+
   dashboardHeader(
     title = span("Database Management Platform", style = "font-size: 20px"),
     titleWidth = 300,
@@ -209,6 +218,7 @@ ui <- dashboardPage(
     ),
     shinyauthr::loginUI("login"),
     uiOutput("user_table"),
+
     tabItems(
       # First Tab
       tabItem(
@@ -216,25 +226,25 @@ ui <- dashboardPage(
         uiOutput("tab1UI")
       ),
       # Second Tab
-      # tabItem(
-      #   tabName = 'del_table',
-      #   uiOutput("tab2UI")
-      # ),
+      tabItem(
+        tabName = 'del_table',
+        uiOutput("tab2UI")
+      ),
       # Third Tab
-      # tabItem(
-      #   tabName = 'update_table',
-      #   uiOutput("tab3UI")
-      # ),
+      tabItem(
+        tabName = 'update_table',
+        uiOutput("tab3UI")
+      ),
       # fourth Tab
-      # tabItem(
-      #   tabName = 'create_table',
-      #   uiOutput("tab4UI")
-      # ),
+      tabItem(
+        tabName = 'create_table',
+        uiOutput("tab4UI")
+      ),
       # Fifth Tab
-      # tabItem(
-      #   tabName = 'insert_value',
-      #   uiOutput("tab5UI")
-      # ),
+      tabItem(
+        tabName = 'insert_value',
+        uiOutput("tab5UI")
+      ),
       # Sixth Tab
       tabItem(
         tabName = 'about',
@@ -279,7 +289,10 @@ server <- function(input, output, session) {
     # only show pre-login
     if(credentials()$user_auth) return(NULL)
     fluidRow(column(6,
-                    p("Please use the usernames and passwords provided below to test this database management platform. We have created two kinds of accounts: admin and manager. The manager account allows one to alter tables, columns, and records, and delete tables. The admin account allows one to do everything above except for deleting tables.", 
+                    p("Please use the usernames and passwords provided below to test this database management platform. 
+                      There are two kinds of accounts: admin and manager. 
+                      The manager account allows one to alter tables, columns, and records, and delete tables. 
+                      The admin account allows one to do everything above except for deleting tables.", 
                       class = "text-center", style = "font-size: 15px;"),
                     br(),
                     renderTable({user_base[, -3]}), offset = 3
@@ -430,11 +443,15 @@ server <- function(input, output, session) {
       updateTextInput(session, "table_name", value = '')
       for (sel_input in c('sel_table_2','sel_table_3','sel_table_3_i','sel_table_3_ii')) {
         updateSelectInput(session, sel_input, 
-                          choices = setdiff(dbListTables(db)))
+                          choices = setdiff(dbListTables(db),
+                                            c("custs","order_items","orders",
+                                              "prods","prods_i","stores")))
       }
       updateSelectInput(session, 'sel_table_1', choices = dbListTables(db))
       updateSelectInput(session, 'sel_table_5', 
-                        choices = setdiff(dbListTables(db)))
+                        choices = setdiff(dbListTables(db),
+                                          c("custs","order_items",
+                                            "prods","prods_i","stores")))
       showModal(modalDialog(
         title = "Success",
         "The table has been successfully created.",
@@ -466,7 +483,9 @@ server <- function(input, output, session) {
             selectInput(
               inputId = 'sel_table_3_ii',
               label = 'Select Table:',
-              choices = setdiff(dbListTables(db)),
+              choices = setdiff(dbListTables(db),
+                                c("custs","order_items","orders",
+                                  "prods","prods_i","stores")),
               selected = 'test_table'
             ),
             wellPanel(
@@ -489,7 +508,9 @@ server <- function(input, output, session) {
             selectInput(
               inputId = 'sel_table_3',
               label = 'Select Table:',
-              choices = setdiff(dbListTables(db)),
+              choices = setdiff(dbListTables(db),
+                                c("custs","order_items","orders",
+                                  "prods","prods_i","stores")),
               selected = 'test_table'
             ),
             wellPanel(
@@ -516,7 +537,9 @@ server <- function(input, output, session) {
            selectInput(
              inputId = 'sel_table_3_i',
              label = 'Select Table:',
-             choices = setdiff(dbListTables(db)),
+             choices = setdiff(dbListTables(db),
+                               c("custs","order_items","orders",
+                                 "prods","prods_i","stores")),
              selected = 'test_table'
            ),
            wellPanel(
@@ -576,7 +599,9 @@ server <- function(input, output, session) {
       updateTextInput(session, "rnm_col_to", value = '')
       # after rename column, update table/colunm select range
       updateSelectInput(session, "sel_table_3", 
-                        choices = setdiff(dbListTables(db)))
+                        choices = setdiff(dbListTables(db),
+                                  c("custs","order_items","orders",
+                                    "prods","prods_i","stores")))
       d1 <- dbGetQuery(
         conn = db,
         statement = paste0('Select * from ',input$sel_table_3)
@@ -623,7 +648,9 @@ server <- function(input, output, session) {
       updateTextInput(session, "add_col_name", value = '')
       # after add column, update colunm select range
       updateSelectInput(session, "sel_table_3",
-                        choices = setdiff(dbListTables(db)))
+                        choices = setdiff(dbListTables(db),
+                                          c("custs","order_items","orders",
+                                            "prods","prods_i","stores")))
       updateSelectInput(session, "sel_col_3", choices = colnames(d))
       showModal(modalDialog(
         title = "Success",
@@ -659,11 +686,15 @@ server <- function(input, output, session) {
                    # after rename table, update the list of tables in tab 2,3,5 
                    for (sel_input in c('sel_table_2','sel_table_3','sel_table_3_i','sel_table_3_ii')) {
                      updateSelectInput(session, sel_input, 
-                                       choices = setdiff(dbListTables(db)))
+                                       choices = setdiff(dbListTables(db),
+                                                         c("custs","order_items","orders",
+                                                           "prods","prods_i","stores")))
                    }
                    updateSelectInput(session, 'sel_table_1', choices = dbListTables(db))
                    updateSelectInput(session, 'sel_table_5', 
-                                     choices = setdiff(dbListTables(db)))
+                                     choices = setdiff(dbListTables(db),
+                                                       c("custs","order_items",
+                                                         "prods","prods_i","stores")))
                    showModal(modalDialog(
                      title = "Success",
                      "The table has been successfully renamed.",
@@ -681,7 +712,9 @@ server <- function(input, output, session) {
         selectInput(
           inputId = 'sel_table_5',
           label = 'Select Table:',
-          choices = setdiff(dbListTables(db)),
+          choices = setdiff(dbListTables(db),
+                            c("custs","order_items",
+                              "prods","prods_i","stores")),
           selected = 'orders'
         ),
         # show each colnames names
@@ -783,11 +816,15 @@ server <- function(input, output, session) {
       }
       for (sel_input in c('sel_table_2','sel_table_3','sel_table_3_i','sel_table_3_ii')) {
         updateSelectInput(session, sel_input, 
-                          choices = setdiff(dbListTables(db)))
+                          choices = setdiff(dbListTables(db),
+                                            c("custs","order_items","orders",
+                                              "prods","prods_i","stores")))
       }
       updateSelectInput(session, 'sel_table_1', choices = dbListTables(db))
       updateSelectInput(session, 'sel_table_5', 
-                        choices = setdiff(dbListTables(db)))
+                        choices = setdiff(dbListTables(db),
+                                          c("custs","order_items",
+                                            "prods","prods_i","stores")))
       showModal(modalDialog(
         title = "Success",
         "The values have been successfully inserted.",
@@ -807,7 +844,9 @@ server <- function(input, output, session) {
               selectInput(
                 inputId = 'sel_table_2',
                 label = 'Tables in Database',
-                choices = setdiff(dbListTables(db)),
+                choices = setdiff(dbListTables(db),
+                                  c("custs","order_items","orders",
+                                    "prods","prods_i","stores")),
                 selected = 'test_table'
               ),
               actionButton(inputId = "del_tab", 
@@ -869,11 +908,15 @@ server <- function(input, output, session) {
       )
       for (sel_input in c('sel_table_2','sel_table_3','sel_table_3_i','sel_table_3_ii')) {
         updateSelectInput(session, sel_input, 
-                          choices = setdiff(dbListTables(db)))
+                          choices = setdiff(dbListTables(db),
+                                            c("custs","order_items","orders",
+                                              "prods","prods_i","stores")))
       }
       updateSelectInput(session, 'sel_table_1', choices = dbListTables(db))
       updateSelectInput(session, 'sel_table_5', 
-                        choices = setdiff(dbListTables(db)))
+                        choices = setdiff(dbListTables(db),
+                                          c("custs","order_items",
+                                            "prods","prods_i","stores")))
       showModal(
         modalDialog(
           title = "Success",
@@ -885,44 +928,43 @@ server <- function(input, output, session) {
   } 
   )
   
-
-
- 
+  
   ############# Tab 6: About
   output$tab6UI <- renderUI({
     req(credentials()$user_auth)
     
     box(title = 'About this app',width = NULL, status = "primary",solidHeader = TRUE,
-      
-      "This Shiny app is a prototype of a database management system, featuring a variety of functions. 
+        
+        "This Shiny app is a prototype of a database management system, featuring a variety of functions. 
           This app addresses the needs in back-end database management with a clean and easy to use UI.",
-      br(),
-      "Check the code on Github:",
-      tags$head(tags$style(HTML("a {color: blue}"))),
-      tags$a(icon("github"), 
-                   href = "https://github.com/munoztd0/DbVieweR/blob/main/app.R",
-                   title = "See the code on github"),
-
-      br(),
-      br(),
-      br(),
-      br(),
-      h5(strong("Developer")),
-      img(src = 'https://avatars.githubusercontent.com/u/43644805?s=400&u=41bc00f6ee310ed215298c9af27ed53e9b3e1a60&v=4', height = 150, align = "right"),
-      
-      "David Munoz Tord, Freelance Data Scientist / R Developer",
-      tags$a(icon("linkedin"), 
-                href = "https://www.linkedin.com/in/david-munoz-tord-409639150",
-                title = "See the code on github"),
-      br(),
-      p("A data enthusiast with steady ambition and restless curiosity.")
-
-      
+        br(),
+        "Check the code on Github:",
+        tags$head(tags$style(HTML("a {color: blue}"))),
+        tags$a(icon("github"), 
+               href = "https://github.com/munoztd0/DBMS/blob/main/app.R",
+               title = "See the code on github"),
+        
+        br(),
+        br(),
+        br(),
+        br(),
+        h5(strong("Developer")),
+        img(src = 'https://avatars.githubusercontent.com/u/43644805?s=400&u=41bc00f6ee310ed215298c9af27ed53e9b3e1a60&v=4', height = 150, align = "right"),
+        
+        "David Munoz Tord, Fullstack Data Scientist / R Developer",
+        tags$a(icon("linkedin"), 
+               href = "https://www.linkedin.com/in/david-munoz-tord-409639150",
+               title = "See the code on github"),
+        br(),
+        p("A data enthusiast with steady ambition and restless curiosity.")
+        
+        
     )  
     
   })
   
- 
+  
+  
 }
 
 # when exiting app, disconnect from the apple database
@@ -935,3 +977,4 @@ onStop(
 
 # execute the Shiny app
 shinyApp(ui, server)
+
