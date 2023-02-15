@@ -18,10 +18,12 @@ RoxygenNote: 7.2.1
 Suggests: 
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 Remotes:
     munoztd0/shinydashboard2,
     JohnCoene/sever  
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
+Config/testthat/edition: 3

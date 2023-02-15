@@ -26,11 +26,7 @@ app_server <- function(input, output, session) {
                             cookie_setter = add_sessionid_to_db,
                             log_out = reactive(logout_init()))
   
-    # call the logout module with reactive trigger to hide/show
-      logout_init <- shinyauthr::logoutServer(
-        id = "logout",
-        active = reactive(credentials()$user_auth)
-      )
+
   
   # Add or remove a CSS class from an HTML element
   # Here sidebar-collapse
