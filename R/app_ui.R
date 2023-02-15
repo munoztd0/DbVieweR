@@ -4,7 +4,7 @@
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @import shinydashboard
-#' @import shinydashboardPlus
+#' 
 #' 
 #' @noRd
 app_ui <- function(request) {
@@ -14,18 +14,18 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    shinydashboardPlus::dashboardPage(
+    dashboardPage( # @importFrom shinydashboardPlus dashboardPage
       title = HTML(glue::glue('DbVieweR')),
 		# Dashboard Page Setup ----------------------------------------------------
-		options = list(sidebarExpandOnHover = TRUE),
+		# options = list(sidebarExpandOnHover = TRUE),
 		skin = "purple",
 		dashboardHeader(
-			title = HTML(glue::glue(''))
+			title = HTML(glue::glue('DbVieweR'))
 		),
 
 		# Dashboard Sidebar -------------------------------------------------------
-		  dashboardSidebar(collapsed = TRUE, 
-		                   minified = TRUE, 
+		  dashboardSidebar(#collapsed = TRUE, 
+		                   #minified = TRUE, 
                    div(textOutput("welcome"), style = "padding: 20px"),
                    sidebarMenu(
                      menuItem("View Tables", tabName = "view_table", icon = icon("search"))#,
@@ -51,22 +51,22 @@ app_ui <- function(request) {
                                   type="text/javascript")#,
                       #golem::add_js_file("returnClick.js")
             ),
-           tags$head(tags$style(HTML(
-                '.myClass { 
-                font-size: 20px;
-                line-height: 50px;
-                text-align: left;
-                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-                padding: 0 15px;
-                overflow: hidden;
-                color: white;
-              }
-            '))),
-            tags$script(HTML('
-            $(document).ready(function() {
-              $("header").find("nav").append(\'<span class="myClass"> DbVieweR </span>\');
-            })
-           ')),
+           # tags$head(tags$style(HTML(
+           #      '.myClass { 
+           #      font-size: 20px;
+           #      line-height: 50px;
+           #      text-align: left;
+           #      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+           #      padding: 0 15px;
+           #      overflow: hidden;
+           #      color: white;
+           #    }
+           #  '))),
+           #  tags$script(HTML('
+           #  $(document).ready(function() {
+           #    $("header").find("nav").append(\'<span class="myClass"> DbVieweR </span>\');
+           #  })
+           # ')),
       
             #shinyauthr::loginUI("login"),
             #uiOutput("user_table"),

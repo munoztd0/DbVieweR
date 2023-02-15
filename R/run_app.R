@@ -28,6 +28,6 @@ run_app <- function(#user = Sys.getenv("data_hub_uid"),
       uiPattern = uiPattern
     ),
     golem_opts = list(
-      "conn_SQL_Lite" =  dbConnect(SQLite(), 'dummy_database.db'))
+      "conn_SQL_Lite" =  dbConnect(SQLite(), 'apple2.db'))
   )
 }

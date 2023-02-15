@@ -92,7 +92,7 @@ app_server <- function(input, output, session) {
   # })
   
   
-
+    mod_view_table_server("view_table_1")
     loaded_view_table   <- TRUE
     # test = "now way"
 
@@ -108,7 +108,6 @@ app_server <- function(input, output, session) {
          # Listener1 <- input$refresh
          # isolate(backgroundchange())
         
-        browser()
          loaded_view_table <<- TRUE
          mod_view_table_server("view_table_1")
          
