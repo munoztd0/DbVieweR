@@ -5,7 +5,10 @@
 #' @import shiny
 #' @noRd
 app_server <- function(input, output, session) {
-  #
+  
+  
+ 
+  
   sever::sever(html = flowbankanalytics::disconnected(), bg_color = "#005c9c")
 
   backgroundchange <- reactive({
@@ -16,6 +19,8 @@ app_server <- function(input, output, session) {
   
   # call login module supplying data frame, user and password cols
   # and reactive trigger
+
+  
   credentials <- shinyauthr::loginServer("login", 
                             data = user_base,
                             user_col = user,
@@ -26,7 +31,10 @@ app_server <- function(input, output, session) {
                             cookie_setter = add_sessionid_to_db,
                             log_out = reactive(logout_init()))
   
-
+  logout_init <- shinyauthr::logoutServer(
+    id = "logout",
+    active = reactive(credentials()$user_auth)
+  )
   
   # Add or remove a CSS class from an HTML element
   # Here sidebar-collapse

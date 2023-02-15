@@ -5,7 +5,7 @@ dev_history.R
 ^dev$
 $run_dev.*
 .gitignore
-
+^.here
 ^codecov\.yml$
 ^LICENSE\.md$
 ^CODE_OF_CONDUCT\.md$

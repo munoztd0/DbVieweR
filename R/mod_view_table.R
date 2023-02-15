@@ -7,6 +7,8 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
+#' 
+
 mod_view_table_ui <- function(id){
 
   req(credentials()$user_auth)

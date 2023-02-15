@@ -5,9 +5,8 @@
 #'
 #' @return This function saves to your database.
 #'
-#' @noRd
 #' 
-#' 
+#' @importFrom sodium password_store
 
 add_sessionid_to_db <- function(user, sessionid, conn = db) {
   tibble(user = user, sessionid = sessionid, login_time = as.character(now())) %>%
@@ -33,21 +32,8 @@ get_sessionids_from_db <- function(conn = db, expiry = cookie_expiry) {
 }
 
 
-#' Init logout module
-#'
-#' @description call the logout module with reactive trigger to hide/show
-#'
-#' @return logout module
-#'
-#' @noRd
-#' 
-#' 
-# 
 
-logout_init <- shinyauthr::logoutServer(
-    id = "logout",
-    active = reactive(credentials()$user_auth)
-    )
+
 
 
 

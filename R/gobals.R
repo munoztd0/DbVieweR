@@ -1,3 +1,5 @@
+
+
 # dataframe that holds usernames, passwords and other user data
 user_base <- data.frame(
   user = c("user1", "user2"),
@@ -5,6 +7,7 @@ user_base <- data.frame(
   password_hash = sapply(c("pass1", "pass2"), sodium::password_store), 
   permissions = c("admin", "manager")
 )
+
 
 
 

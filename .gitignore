@@ -1,8 +1,9 @@
 rsconnect/
 *.db
 inst/doc
-.Rproj.user
-.Rhistory
-.Rdata
+*.Rproj
+*.Rhistory
+*.Rdata
 .httr-oauth
 .DS_Store
+.Rproj.user
