@@ -24,7 +24,7 @@ if (file.exists("auth_db.db")) {
 
 
 # connect to the dummy database
-conn <- dbConnect(SQLite(), 'dummy_database.db')
+conn <- golem::get_golem_options("conn_SQL_Lite")
 # TODO make this automatic
 #tables <- DBI::dbListTables(db)
 

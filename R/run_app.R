@@ -7,13 +7,17 @@
 #' @export
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
-run_app <- function(
-  onStart = NULL,
-  options = list(),
-  enableBookmarking = NULL,
-  uiPattern = "/",
-  ...
-) {
+#' @importFrom RSQLite SQLite
+#' @importFrom DBI dbConnect
+#' 
+
+run_app <- function(#user = Sys.getenv("data_hub_uid"),
+                    #password = Sys.getenv("data_hub_pwd"),
+                    onStart = NULL,
+                    options = list(),
+                    enableBookmarking = NULL,
+                    uiPattern = "/",
+                    ...) {
   with_golem_options(
     app = shinyApp(
       ui = app_ui,
@@ -23,6 +27,7 @@ run_app <- function(
       enableBookmarking = enableBookmarking,
       uiPattern = uiPattern
     ),
-    golem_opts = list(...)
+    golem_opts = list(
+      "conn_SQL_Lite" =  dbConnect(SQLite(), 'dummy_database.db'))
   )
 }

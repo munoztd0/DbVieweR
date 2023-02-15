@@ -9,10 +9,84 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    fluidPage(
-      h1("appdemo")
-    )
-  )
+    dashboardPage(
+		# Dashboard Page Setup ----------------------------------------------------
+		#title = META$name,
+		skin = "purple",
+		theme = NULL,
+		sidebar_mini = TRUE,
+		dashboardHeader(
+			title = HTML(glue::glue(''))
+		),
+
+		# Dashboard Sidebar -------------------------------------------------------
+		  dashboardSidebar(collapsed = TRUE, 
+                   div(textOutput("welcome"), style = "padding: 20px"),
+                   sidebarMenu(
+                     menuItem("View Tables", tabName = "view_table", icon = icon("search"))#,
+                     #menuItem("Create Tables", tabName = "create_table", icon = icon("plus-square")),
+                     #menuItem("Update Tables", tabName = "update_table", icon = icon("exchange-alt")),
+                     #menuItem("Insert Entries", tabName = "insert_value", icon = icon("edit")),
+                     #modify entries menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
+                     #Insert tbale form excel menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
+                     #menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
+                     #menuItem("About", tabName = "about", icon = icon("info-circle"))
+                   )
+  ),
+		# menuItem("Trading", icon = icon("chart-line", verify_fa = FALSE), startExpanded = F,
+		# menuSubItem("Monitoring", tabName = "trades_tab", icon = icon("right-left")),
+  
+		# Dashboard Body ----------------------------------------------------------
+
+    dashboardBody(
+            shinyjs::useShinyjs(),
+            tags$head(tags$style(".table{margin: 0 auto;}"),
+                      tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js",
+                                  type="text/javascript"),
+                      golem::add_js_file("returnClick.js")
+            ),
+            shinyauthr::loginUI("login"),
+            uiOutput("user_table"),
+
+            tabItems(
+              # First Tab
+              tabItem(
+                tabName = 'view_table',
+                mod_view_table_ui("view_table_1")
+              )#,
+              # # Second Tab
+              # tabItem(
+              #   tabName = 'del_table',
+              #   uiOutput("tab2UI")
+              # ),
+              # # Third Tab
+              # tabItem(
+              #   tabName = 'update_table',
+              #   uiOutput("tab3UI")
+              # ),
+              # # fourth Tab
+              # tabItem(
+              #   tabName = 'create_table',
+              #   uiOutput("tab4UI")
+              # ),
+              # # Fifth Tab
+              # tabItem(
+              #   tabName = 'insert_value',
+              #   uiOutput("tab5UI")
+              # ),
+              # # Sixth Tab
+              # tabItem(
+              #   tabName = 'about',
+              #   uiOutput("tab6UI")
+              # )
+            )
+          )
+        )
+
+			#tabItem(tabName = "trades_tab", tradesUI("trades_tab_ui_1"))
+
+			)
+	
 }
 
 #' Add external Resources to the Application
