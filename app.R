@@ -1,181 +1,32 @@
-
+# the necessary packages
 require(pacman)
-
 
 #lazy load or install necessary packages
 suppressPackageStartupMessages(
   pacman::p_load(
     DBI, dplyr, RSQLite, DT, shiny, shinydashboard,
-    shinyjs, shinythemes, shinyWidgets,
-    shinyauthr, shinyFeedback, sodium
+    shinyjs, shinythemes, shinyWidgets, lubridate,
+    shinyauthr, shinyFeedback, sodium, DBI, openxlsx
     )
   )
 
+source("globals.R")
+
+# connect to, or setup and connect to local SQLite db
+
+if (file.exists("auth_db.db")) {
+  db <- dbConnect(SQLite(), "auth_db.db")
+} else {
+  db <- dbConnect(SQLite(), "auth_db.db")
+  dbCreateTable(conn, "sessionids", c(user = "TEXT", sessionid = "TEXT", login_time = "TEXT"))
+}
 
 
 
-# dataframe that holds usernames, passwords and other user data
-user_base <- data.frame(
-  username = c("user1", "user2"),
-  password = c("pass1", "pass2"), 
-  password_hash = sapply(c("pass1", "pass2"), sodium::password_store), 
-  permissions = c("admin", "manager")
-)
-
-# sqlite keywords 
-sqlite_kw <- 
-  c('ABORT',
-    'ACTION',
-    'ADD',
-    'AFTER',
-    'ALL',
-    'ALTER',
-    'ALWAYS',
-    'ANALYZE',
-    'AND',
-    'AS',
-    'ASC',
-    'ATTACH',
-    'AUTOINCREMENT',
-    'BEFORE',
-    'BEGIN',
-    'BETWEEN',
-    'BY',
-    'CASCADE',
-    'CASE',
-    'CAST',
-    'CHECK',
-    'COLLATE',
-    'COLUMN',
-    'COMMIT',
-    'CONFLICT',
-    'CONSTRAINT',
-    'CREATE',
-    'CROSS',
-    'CURRENT',
-    'CURRENT_DATE',
-    'CURRENT_TIME',
-    'CURRENT_TIMESTAMP',
-    'DATABASE',
-    'DEFAULT',
-    'DEFERRABLE',
-    'DEFERRED',
-    'DELETE',
-    'DESC',
-    'DETACH',
-    'DISTINCT',
-    'DO',
-    'DROP',
-    'EACH',
-    'ELSE',
-    'END',
-    'ESCAPE',
-    'EXCEPT',
-    'EXCLUDE',
-    'EXCLUSIVE',
-    'EXISTS',
-    'EXPLAIN',
-    'FAIL',
-    'FILTER',
-    'FIRST',
-    'FOLLOWING',
-    'FOR',
-    'FOREIGN',
-    'FROM',
-    'FULL',
-    'GENERATED',
-    'GLOB',
-    'GROUP',
-    'GROUPS',
-    'HAVING',
-    'IF',
-    'IGNORE',
-    'IMMEDIATE',
-    'IN',
-    'INDEX',
-    'INDEXED',
-    'INITIALLY',
-    'INNER',
-    'INSERT',
-    'INSTEAD',
-    'INTERSECT',
-    'INTO',
-    'IS',
-    'ISNULL',
-    'JOIN',
-    'KEY',
-    'LAST',
-    'LEFT',
-    'LIKE',
-    'LIMIT',
-    'MATCH',
-    'NATURAL',
-    'NO',
-    'NOT',
-    'NOTHING',
-    'NOTNULL',
-    'NULL',
-    'NULLS',
-    'OF',
-    'OFFSET',
-    'ON',
-    'OR',
-    'ORDER',
-    'OTHERS',
-    'OUTER',
-    'OVER',
-    'PARTITION',
-    'PLAN',
-    'PRAGMA',
-    'PRECEDING',
-    'PRIMARY',
-    'QUERY',
-    'RAISE',
-    'RANGE',
-    'RECURSIVE',
-    'REFERENCES',
-    'REGEXP',
-    'REINDEX',
-    'RELEASE',
-    'RENAME',
-    'REPLACE',
-    'RESTRICT',
-    'RIGHT',
-    'ROLLBACK',
-    'ROW',
-    'ROWS',
-    'SAVEPOINT',
-    'SELECT',
-    'SET',
-    'TABLE',
-    'TEMP',
-    'TEMPORARY',
-    'THEN',
-    'TIES',
-    'TO',
-    'TRANSACTION',
-    'TRIGGER',
-    'UNBOUNDED',
-    'UNION',
-    'UNIQUE',
-    'UPDATE',
-    'USING',
-    'VACUUM',
-    'VALUES',
-    'VIEW',
-    'VIRTUAL',
-    'WHEN',
-    'WHERE',
-    'WINDOW',
-    'WITH',
-    'WITHOUT')
-
-
-sqlite_kw_lo <- tolower(sqlite_kw)
-
-# connect to the apple database
-db <- dbConnect(SQLite(), 'apple2.db') 
-prodtype <- dbGetQuery(db, 'SELECT distinct prod_type from prods_i')
+# connect to the dummy database
+conn <- dbConnect(SQLite(), 'dummy_database.db')
+# TODO make this automatic
+#tables <- DBI::dbListTables(db)
 
 
 ###############################################
@@ -187,6 +38,7 @@ ui <- dashboardPage(
   dashboardHeader(
     title = span("Database Management Platform", style = "font-size: 20px"),
     titleWidth = 300,
+    tags$li(class = "dropdown", style = "padding: 8px;", actionButton("refresh", "refresh")),
     tags$li(class = "dropdown", 
             tags$a(icon("github"), 
                    href = "https://github.com/munoztd0/DbVieweR/blob/main/app.R",
@@ -204,6 +56,8 @@ ui <- dashboardPage(
                      menuItem("Create Tables", tabName = "create_table", icon = icon("plus-square")),
                      menuItem("Update Tables", tabName = "update_table", icon = icon("exchange-alt")),
                      menuItem("Insert Entries", tabName = "insert_value", icon = icon("edit")),
+                     #modify entries menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
+                     #Insert tbale form excel menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
                      menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
                      menuItem("About", tabName = "about", icon = icon("info-circle"))
                    )
@@ -259,19 +113,30 @@ ui <- dashboardPage(
 ###############################################
 
 server <- function(input, output, session) {
+
+  backgroundchange <- reactive({
+      invalidateLater(1000, session)
+
+      runif(1)
+    })
   
   # call login module supplying data frame, user and password cols
   # and reactive trigger
-  credentials <- callModule(shinyauthr::login, "login", 
+  credentials <- shinyauthr::loginServer("login", 
                             data = user_base,
-                            user_col = username,
+                            user_col = user,
                             pwd_col = password_hash,
-                            sodium_hashed = TRUE,
+                            sessionid_col = sessionid,
+                            sodium_hashed = TRUE,  
+                            cookie_getter = get_sessionids_from_db,
+                            cookie_setter = add_sessionid_to_db,
                             log_out = reactive(logout_init()))
   
-  # call the logout module with reactive trigger to hide/show
-  logout_init <- callModule(shinyauthr::logout, "logout", 
-                            reactive(credentials()$user_auth))
+    # call the logout module with reactive trigger to hide/show
+      logout_init <- shinyauthr::logoutServer(
+        id = "logout",
+        active = reactive(credentials()$user_auth)
+      )
   
   # Add or remove a CSS class from an HTML element
   # Here sidebar-collapse
@@ -312,6 +177,11 @@ server <- function(input, output, session) {
   ############# Tab 1: View Table
   output$tab1UI <- renderUI({
     req(credentials()$user_auth)
+
+    Listener1 <- input$refresh
+    isolate(backgroundchange())
+
+
     box(width = NULL, status = "primary",
         wellPanel(
           sidebarLayout(
@@ -732,7 +602,7 @@ server <- function(input, output, session) {
       statement = paste0('SELECT * from ',input$sel_table_5)
     )
     typ <- dbGetQuery(
-      conn = db, statement = paste0('PRAGMA table_info(',input$sel_table_5,')')
+      conn = conn, statement = paste0('PRAGMA table_info(',input$sel_table_5,')')
     )
     for (col in colnames(d)) {
       typ_i = typ$type[typ$name==col]
