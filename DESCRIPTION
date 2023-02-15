@@ -16,7 +16,8 @@ Imports:
     RSQLite, 
     openxlsx,
     sodium, 
-    shinydashboard2
+    shinydashboard,
+    shinydashboardPlus
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.2
@@ -26,9 +27,6 @@ Suggests:
     rmarkdown,
     spelling,
     testthat (>= 3.0.0)
-Remotes:
-    munoztd0/shinydashboard2,
-    JohnCoene/sever  
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)

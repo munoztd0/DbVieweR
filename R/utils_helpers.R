@@ -37,24 +37,6 @@ get_sessionids_from_db <- function(conn = db, expiry = cookie_expiry) {
 
 
 
-#' disconnect prompt
-#'
-#' @description nice disconnected promt
-#' #'
-#' @return sever disconnected prompt
-#'
-#' @noRd
-#' 
-#' 
-# 
-
-disconnected <- sever::sever_default(
-	title = "Disconnected",
-	subtitle = "Your session ended",
-	button = "Reconnect"
-	)
-
-
 #' Style My Workbook
 #'
 #'
@@ -161,5 +143,13 @@ style_my_workbook <-function (wb, dt, SheetName, alt_rows = TRUE)
     setRowHeights(wb, sheet = SheetName, 1, 40)
     return(wb)
 }
+
+
+
+
+
+
+
+
 
 

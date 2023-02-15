@@ -20,7 +20,7 @@ run_app <- function(#user = Sys.getenv("data_hub_uid"),
                     ...) {
   with_golem_options(
     app = shinyApp(
-      ui = app_ui,
+      ui = shinymanager::secure_app(app_ui, head_auth = tags$script(inactivity), theme = shinythemes::shinytheme("flatly")),
       server = app_server,
       onStart = onStart,
       options = options,

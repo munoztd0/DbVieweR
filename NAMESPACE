@@ -2,8 +2,10 @@
 
 export(run_app)
 import(shiny)
-import(shinydashboard2)
+import(shinydashboard)
+import(shinydashboardPlus)
 importFrom(DBI,dbConnect)
+importFrom(DBI,dbListTables)
 importFrom(RSQLite,SQLite)
 importFrom(golem,activate_js)
 importFrom(golem,add_resource_path)

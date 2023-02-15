@@ -3,25 +3,29 @@
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
-#' @import shinydashboard2
+#' @import shinydashboard
+#' @import shinydashboardPlus
+#' 
 #' @noRd
 app_ui <- function(request) {
+  
+  
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    dashboardPage(
+    shinydashboardPlus::dashboardPage(
+      title = HTML(glue::glue('DbVieweR')),
 		# Dashboard Page Setup ----------------------------------------------------
-		#title = META$name,
+		options = list(sidebarExpandOnHover = TRUE),
 		skin = "purple",
-		theme = NULL,
-		sidebar_mini = TRUE,
 		dashboardHeader(
 			title = HTML(glue::glue(''))
 		),
 
 		# Dashboard Sidebar -------------------------------------------------------
 		  dashboardSidebar(collapsed = TRUE, 
+		                   minified = TRUE, 
                    div(textOutput("welcome"), style = "padding: 20px"),
                    sidebarMenu(
                      menuItem("View Tables", tabName = "view_table", icon = icon("search"))#,
@@ -40,14 +44,32 @@ app_ui <- function(request) {
 		# Dashboard Body ----------------------------------------------------------
 
     dashboardBody(
+            title = HTML(glue::glue('DbVieweR')),
             shinyjs::useShinyjs(),
             tags$head(tags$style(".table{margin: 0 auto;}"),
                       tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js",
-                                  type="text/javascript"),
-                      golem::add_js_file("returnClick.js")
+                                  type="text/javascript")#,
+                      #golem::add_js_file("returnClick.js")
             ),
-            shinyauthr::loginUI("login"),
-            uiOutput("user_table"),
+           tags$head(tags$style(HTML(
+                '.myClass { 
+                font-size: 20px;
+                line-height: 50px;
+                text-align: left;
+                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                padding: 0 15px;
+                overflow: hidden;
+                color: white;
+              }
+            '))),
+            tags$script(HTML('
+            $(document).ready(function() {
+              $("header").find("nav").append(\'<span class="myClass"> DbVieweR </span>\');
+            })
+           ')),
+      
+            #shinyauthr::loginUI("login"),
+            #uiOutput("user_table"),
 
             tabItems(
               # First Tab
@@ -87,7 +109,6 @@ app_ui <- function(request) {
 			#tabItem(tabName = "trades_tab", tradesUI("trades_tab_ui_1"))
 
 			)
-	
 }
 
 #' Add external Resources to the Application
@@ -108,7 +129,7 @@ golem_add_external_resources <- function() {
     favicon(),
     bundle_resources(
       path = app_sys("app/www"),
-      app_title = "appdemo"
+      app_title = "DbVieweR"
     )
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
