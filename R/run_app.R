@@ -7,17 +7,30 @@
 #' @export
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
-#' @importFrom RSQLite SQLite
-#' @importFrom DBI dbConnect
+#' @importFrom DBI dbDisconnect
 #' 
 
-run_app <- function(#user = Sys.getenv("data_hub_uid"),
-                    #password = Sys.getenv("data_hub_pwd"),
-                    onStart = NULL,
+run_app <- function(onStart = NULL,
                     options = list(),
                     enableBookmarking = NULL,
                     uiPattern = "/",
+                    conn = NULL,
                     ...) {
+  
+  # when exiting app, disconnect from database
+  onStart = function() {
+    cat("Doing application setup\n")
+    
+    conn = create_conn()
+    
+    onStop(function() {
+      cat("Doing application cleanup\n")
+      
+      DBI::dbDisconnect(conn)
+    })
+  }
+  
+  
   with_golem_options(
     app = shinyApp(
       ui = shinymanager::secure_app(app_ui, head_auth = tags$script(inactivity), theme = shinythemes::shinytheme("flatly")),
@@ -27,7 +40,6 @@ run_app <- function(#user = Sys.getenv("data_hub_uid"),
       enableBookmarking = enableBookmarking,
       uiPattern = uiPattern
     ),
-    golem_opts = list(
-      "conn_SQL_Lite" =  dbConnect(SQLite(), 'apple2.db'))
+    golem_opts = list("conn_SQL_Lite" =  create_conn() )
   )
 }

@@ -31,7 +31,8 @@ mod_view_table_ui <- function(id){
                       selectInput(
                         inputId = ns('sel_table_1'),
                         label = 'Tables in Database',
-                        choices = DBI::dbListTables(conn)
+                        choices = sort(DBI::dbListTables(conn), decreasing = T)
+                          
                       ),
                       
                       h4(strong("Table Preview")),
@@ -70,9 +71,9 @@ mod_view_table_server <- function(id){
     
     conn <- golem::get_golem_options("conn_SQL_Lite")
     
-    
     # show table
     output$sel_table_view <- DT::renderDT({
+      
       
       dplyr::tbl(conn, input$sel_table_1)  |> collect() |> 
         

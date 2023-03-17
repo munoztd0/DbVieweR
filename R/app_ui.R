@@ -28,14 +28,14 @@ app_ui <- function(request) {
 		                   #minified = TRUE, 
                    div(textOutput("welcome"), style = "padding: 20px"),
                    sidebarMenu(
-                     menuItem("View Tables", tabName = "view_table", icon = icon("search"))#,
+                     menuItem("View Tables", tabName = "view_table", icon = icon("search")),
                      #menuItem("Create Tables", tabName = "create_table", icon = icon("plus-square")),
                      #menuItem("Update Tables", tabName = "update_table", icon = icon("exchange-alt")),
                      #menuItem("Insert Entries", tabName = "insert_value", icon = icon("edit")),
                      #modify entries menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
                      #Insert tbale form excel menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
                      #menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
-                     #menuItem("About", tabName = "about", icon = icon("info-circle"))
+                     menuItem("About", tabName = "about", icon = icon("info-circle"))
                    )
   ),
 		# menuItem("Trading", icon = icon("chart-line", verify_fa = FALSE), startExpanded = F,
@@ -76,7 +76,7 @@ app_ui <- function(request) {
               tabItem(
                 tabName = 'view_table',
                 mod_view_table_ui("view_table_1")
-              )#,
+              ),
               # # Second Tab
               # tabItem(
               #   tabName = 'del_table',
@@ -97,11 +97,11 @@ app_ui <- function(request) {
               #   tabName = 'insert_value',
               #   uiOutput("tab5UI")
               # ),
-              # # Sixth Tab
-              # tabItem(
-              #   tabName = 'about',
-              #   uiOutput("tab6UI")
-              # )
+              # Sixth Tab
+              tabItem(
+                tabName = 'about',
+                mod_about_ui("about_1")
+              )
             )
           )
         )
