@@ -41,9 +41,11 @@ mod_view_table_ui <- function(id){
                         outputId = ns('sel_table_view'))
                       )
                       
-               )
-               
-               
+               ),
+              fluidRow(  column(12, 
+                          downloadButton(ns('download'),"Download the data")          
+                        )
+                    )  
                
       )
              
@@ -61,6 +63,7 @@ mod_view_table_ui <- function(id){
 #'
 #' @import dplyr
 #' @importFrom DT renderDT datatable
+#' @importFrom openxlsx createWorkbook saveWorkbook
 #'
 #' @noRd 
 mod_view_table_server <- function(id){
@@ -88,6 +91,36 @@ mod_view_table_server <- function(id){
 
 
     })
+
+      res_auth <- shinymanager::secure_server(check_credentials = shinymanager::check_credentials(credentials))
+
+
+  # Create reactive values including all credentials
+  creds_reactive <- reactive({
+    reactiveValuesToList(res_auth)
+  })
+
+
+     # Hide extraOutput only when condition is TRUE
+  observe({
+    if (!is.null(creds_reactive()$level) && creds_reactive()$level > 0 ) {
+      
+      print("show")
+
+      output$download <- 
+        downloadHandler(
+          filename = paste0("data_", input$sel_table_1, ".xlsx"),
+          content = function(file){
+            db <- dplyr::tbl(conn, input$sel_table_1)  |> collect()
+            wb <- openxlsx::createWorkbook()
+            style_my_workbook(wb, db[input[["sel_table_view_rows_all"]], ], "Sheet1", TRUE)
+            openxlsx::saveWorkbook(wb, file, overwrite = TRUE)
+          }
+        )
+
+
+    } 
+  })
     
   
       

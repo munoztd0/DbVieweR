@@ -25,6 +25,8 @@ run_app <- function(onStart = NULL,
     
     onStop(function() {
       cat("Doing application cleanup\n")
+      #remove temp files
+      unlink("test_db_file")
       
       DBI::dbDisconnect(conn)
     })
