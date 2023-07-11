@@ -1,7 +1,6 @@
-rsconnect/
+rsconnect/*
 *.db
 inst/doc
-*.Rproj
 *.Rhistory
 *.Rdata
 .httr-oauth

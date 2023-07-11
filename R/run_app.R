@@ -32,6 +32,8 @@ run_app <- function(onStart = NULL,
     })
   }
   
+
+  
   
   with_golem_options(
     app = shinyApp(

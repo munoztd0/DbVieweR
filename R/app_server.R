@@ -5,11 +5,14 @@
 #' @import shiny
 #' @noRd
 app_server <- function(input, output, session) {
+  
+
 
   res_auth <- shinymanager::secure_server(check_credentials = shinymanager::check_credentials(credentials))
 
 
-  
+  shinymetrics::shinymetrics_server(token = "CQDPXTAORH7X7AP5DTXMLTL3GI") # (optional) print information on tracking
+    
   
 
   

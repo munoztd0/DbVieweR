@@ -46,6 +46,7 @@ app_ui <- function(request) {
     dashboardBody(
             title = HTML(glue::glue('DbVieweR')),
             shinyjs::useShinyjs(),
+            tracker$include(),
             tags$head(tags$style(".table{margin: 0 auto;}"),
                       tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js",
                                   type="text/javascript")#,

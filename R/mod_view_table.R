@@ -22,6 +22,7 @@ mod_view_table_ui <- function(id){
   
 
   fluidPage(
+  
     fluidRow(
       column(1),
       column(10,
@@ -69,7 +70,7 @@ mod_view_table_ui <- function(id){
 mod_view_table_server <- function(id){
   moduleServer( id, function(input, output, session){
     
-    
+
     ns <- session$ns
     
     conn <- golem::get_golem_options("conn_SQL_Lite")
