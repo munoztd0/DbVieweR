@@ -48,7 +48,7 @@ credentials <- data.frame(
 )
 
 
-tracker <-  shinymetrics::Shinymetrics$new(token = "CQDPXTAORH7X7AP5DTXMLTL3GI")
+tracker <-  shinymetrics::Shinymetrics$new(token = Sys.getenv("SHINYMETRICS"))
 
 tracker <- tracker$track_recommended()
 
