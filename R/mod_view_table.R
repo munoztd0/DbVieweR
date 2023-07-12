@@ -24,7 +24,6 @@ mod_view_table_ui <- function(id){
   fluidPage(
   
     fluidRow(
-      tracker$include(),
       column(1),
       column(10,
              fluidRow(
@@ -71,10 +70,6 @@ mod_view_table_ui <- function(id){
 mod_view_table_server <- function(id){
   moduleServer( id, function(input, output, session){
     
-    shinymetrics::shinymetrics_server(token = "CQDPXTAORH7X7AP5DTXMLTL3GI") # (optional) print information on tracking
-      
-  
-
     ns <- session$ns
     
     conn <- golem::get_golem_options("conn_SQL_Lite")

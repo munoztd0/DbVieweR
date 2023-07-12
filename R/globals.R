@@ -48,9 +48,6 @@ credentials <- data.frame(
 )
 
 
-tracker <-  shinymetrics::Shinymetrics$new(token = Sys.getenv("SHINYMETRICS"))
-
-tracker <- tracker$track_recommended()
 
 # load data
 data(starwars2, envir=environment())

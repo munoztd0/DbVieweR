@@ -9,8 +9,11 @@
 #' @noRd
 app_ui <- function(request) {
   
+  tracker <-  shinymetrics::Shinymetrics$new()$track_recommended()
   
   tagList(
+    tracker$include(),
+    shinymetrics::trackingModalBS3(),
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic

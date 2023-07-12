@@ -6,7 +6,7 @@
 #' @noRd
 app_server <- function(input, output, session) {
   
-
+  shinymetrics::shinymetrics_server()
 
   res_auth <- shinymanager::secure_server(check_credentials = shinymanager::check_credentials(credentials))
 
