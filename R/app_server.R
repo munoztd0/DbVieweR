@@ -8,7 +8,6 @@ app_server <- function(input, output, session) {
 
   res_auth <- shinymanager::secure_server(check_credentials = shinymanager::check_credentials(credentials))
 
-
   
   onStop(function() cat("Session stopped\n"))
   
@@ -26,36 +25,34 @@ app_server <- function(input, output, session) {
 
       runif(1)
     })
+   conn <- golem::get_golem_options("conn_SQL_Lite")
   
-    conn <- golem::get_golem_options("conn_SQL_Lite")
-    
-    # Reactive value for table names
-    table_names <- reactiveVal(DBI::dbListTables(conn))
+  # Reactive value for table names
+  table_names <- reactiveVal(DBI::dbListTables(conn))
 
-    mod_view_table_server("view_table_1", table_names)
-    mod_update_table_server("update_table_1", table_names)
-  
-    loaded_about   <- FALSE
+  loaded_view_table <- FALSE
+  loaded_update_table <- FALSE
+  loaded_about <- FALSE
 
-    
-    observeEvent(input$sidebarmenu, {
+  observeEvent(input$sidebarmenu, {
+    #LAZY LOADING
 
+    if(input$sidebarmenu == "view_table" & !loaded_view_table){
+      loaded_view_table <<- TRUE
+      mod_view_table_server("view_table_1", table_names)
+      print("view_table_1")
+    }
 
-      #LAZY LOADING
+    if(input$sidebarmenu == "update_table" & !loaded_update_table){
+      loaded_update_table <<- TRUE
+      mod_update_table_server("update_table_1", table_names)
+      print("update_table_1")
+    }
 
-      if(input$sidebarmenu == "about" & !loaded_about){
-        
-        
-        loaded_about <<- TRUE
-        mod_about_server("about_1")
-
-      }
-
-
-      
-      
-      
-      
-    })
-
+    if(input$sidebarmenu == "about" & !loaded_about){
+      loaded_about <<- TRUE
+      # mod_about_server("about_1")
+    }
+  })
+  # ...
 }

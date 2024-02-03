@@ -28,6 +28,7 @@ app_ui <- function(request) {
 		                   #minified = TRUE, 
                    div(textOutput("welcome"), style = "padding: 20px"),
                    sidebarMenu(
+                     id = "sidebarmenu",  # Add this line
                      menuItem("View Tables", tabName = "view_table", icon = icon("search")),
                      #menuItem("Create Tables", tabName = "create_table", icon = icon("plus-square")),
                      menuItem("Update Tables", tabName = "update_table", icon = icon("exchange-alt")),

@@ -45,12 +45,12 @@ mod_about_ui <- function(id){
 #' about Server Functions
 #'
 #' @noRd 
-mod_about_server <- function(id){
-  moduleServer( id, function(input, output, session){
-    ns <- session$ns
+# mod_about_server <- function(id){
+#   moduleServer( id, function(input, output, session){
+#     ns <- session$ns
  
-  })
-}
+#   })
+# }
     
 ## To be copied in the UI
 # mod_about_ui("about_1")
