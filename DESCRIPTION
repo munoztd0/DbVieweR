@@ -14,9 +14,9 @@ Imports:
     shiny (>= 1.7.4),
     DBI,
     dplyr,
-    RSQLite, 
+    RSQLite,
     openxlsx,
-    sodium, 
+    sodium,
     shinydashboard,
     shinydashboardPlus,
     shinymanager,
@@ -24,7 +24,8 @@ Imports:
     sever,
     shinyjs,
     DT,
-    openxlsx
+    openxlsx,
+    pkgload
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.0

@@ -46,7 +46,7 @@ usethis::use_test("app")
 # Documentation
 
 ## Vignette ----
-usethis::use_vignette("appdemo")
+usethis::use_vignette("DbViewer")
 devtools::build_vignettes()
 
 ## Code Coverage----

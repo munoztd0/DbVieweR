@@ -10,9 +10,6 @@ app_server <- function(input, output, session) {
 
 
   
-  
-
-  
   onStop(function() cat("Session stopped\n"))
   
   
@@ -30,23 +27,31 @@ app_server <- function(input, output, session) {
       runif(1)
     })
   
+    conn <- golem::get_golem_options("conn_SQL_Lite")
+    
+    # Reactive value for table names
+    table_names <- reactiveVal(DBI::dbListTables(conn))
+
+    mod_view_table_server("view_table_1", table_names)
+    mod_update_table_server("update_table_1", table_names)
   
-    mod_view_table_server("view_table_1")
     loaded_about   <- FALSE
 
     
     observeEvent(input$sidebarmenu, {
 
 
-      #LOADING
+      #LAZY LOADING
 
       if(input$sidebarmenu == "about" & !loaded_about){
         
         
         loaded_about <<- TRUE
         mod_about_server("about_1")
-        
+
       }
+
+
       
       
       

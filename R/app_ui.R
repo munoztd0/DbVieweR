@@ -30,7 +30,7 @@ app_ui <- function(request) {
                    sidebarMenu(
                      menuItem("View Tables", tabName = "view_table", icon = icon("search")),
                      #menuItem("Create Tables", tabName = "create_table", icon = icon("plus-square")),
-                     #menuItem("Update Tables", tabName = "update_table", icon = icon("exchange-alt")),
+                     menuItem("Update Tables", tabName = "update_table", icon = icon("exchange-alt")),
                      #menuItem("Insert Entries", tabName = "insert_value", icon = icon("edit")),
                      #modify entries menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
                      #Insert tbale form excel menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
@@ -83,10 +83,10 @@ app_ui <- function(request) {
               #   uiOutput("tab2UI")
               # ),
               # # Third Tab
-              # tabItem(
-              #   tabName = 'update_table',
-              #   uiOutput("tab3UI")
-              # ),
+              tabItem(
+                tabName = 'update_table',
+                mod_update_table_ui("update_table_1")
+              ),
               # # fourth Tab
               # tabItem(
               #   tabName = 'create_table',

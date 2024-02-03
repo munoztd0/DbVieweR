@@ -9,3 +9,5 @@ $run_dev.*
 ^codecov\.yml$
 ^LICENSE\.md$
 ^CODE_OF_CONDUCT\.md$
+^app\.R$
+^rsconnect$
