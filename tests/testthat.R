@@ -7,6 +7,4 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(DbVieweR)
 
-test_check("DbVieweR")

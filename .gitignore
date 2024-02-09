@@ -8,3 +8,6 @@ inst/doc
 .DS_Store
 .Rproj.user
 misc/
+.Rhistory
+.Rdata
+.quarto

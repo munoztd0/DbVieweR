@@ -20,7 +20,7 @@ create_conn <- function(){
     db <- dbConnect(SQLite(), 'test_db_file')
     dbWriteTable(db, "iris", iris, overwrite =T)
     dbWriteTable(db, "mtcars", mtcars, overwrite =T)
-    dbWriteTable(db, "starwars2", DbVieweR::starwars2, overwrite =T)
+    dbWriteTable(db, "starwars2", starwars2, overwrite =T)
   }
   
   return(db)

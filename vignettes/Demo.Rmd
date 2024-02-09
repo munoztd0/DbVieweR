@@ -14,14 +14,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(DbVieweR)
-```
-
 # Introduction
 
 This is a demo vignette for the `DbVieweR` package.
 
 ```{r}
-DbVieweR::run_app()
+pkgload::load_all(export_all = FALSE,helpers = FALSE,attach_testthat = FALSE)
+options( "golem.app.prod" = TRUE)
+run_app()
 ```

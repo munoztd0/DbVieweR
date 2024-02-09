@@ -12,13 +12,13 @@ app_server <- function(input, output, session) {
   onStop(function() cat("Session stopped\n"))
   
   
-  disconnected <- sever::sever_default(
-    title = "Disconnected",
-    subtitle = "Your session ended",
-    button = "Reconnect"
-  )
+  # disconnected <- sever::sever_default(
+  #   title = "Disconnected",
+  #   subtitle = "Your session ended",
+  #   button = "Reconnect"
+  # )
   
-  sever::sever(html = disconnected, bg_color = "#005c9c")
+  # sever::sever(html = disconnected, bg_color = "#005c9c")
 
   backgroundchange <- reactive({
       invalidateLater(1000, session)
@@ -40,13 +40,11 @@ app_server <- function(input, output, session) {
     if(input$sidebarmenu == "view_table" & !loaded_view_table){
       loaded_view_table <<- TRUE
       mod_view_table_server("view_table_1", table_names)
-      print("view_table_1")
     }
 
     if(input$sidebarmenu == "update_table" & !loaded_update_table){
       loaded_update_table <<- TRUE
       mod_update_table_server("update_table_1", table_names)
-      print("update_table_1")
     }
 
     if(input$sidebarmenu == "about" & !loaded_about){
