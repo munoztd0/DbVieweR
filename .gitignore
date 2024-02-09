@@ -11,3 +11,5 @@ misc/
 .Rhistory
 .Rdata
 .quarto
+/doc/
+/Meta/
