@@ -1,5 +1,19 @@
 
-# Database Management System
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# DBvieweR: a Database Management System for R <a href="https://munoztd0.shinyapps.io/DbVieweR"><img src="man/figures/hex-DBvieweR.png" align="right" height="138" /></a>
+
+<!-- badges: start -->
+
+<!-- [![CRAN
+status](https://www.r-pkg.org/badges/version/dplyr)](https://cran.r-project.org/package=dplyr)
+[![R-CMD-check](https://github.com/tidyverse/dplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/dplyr/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/tidyverse/dplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dplyr?branch=main) -->
+<!-- badges: end -->
+
+
+# Overview
 
 About this Shiny app:
 
