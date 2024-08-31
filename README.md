@@ -1,7 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# DBvieweR: a Database Management System for R <a href="https://munoztd0.shinyapps.io/DbVieweR"><img src="man/figures/hex-DBvieweR.png" align="right" height="138" /></a>
+# DBvieweR: "><img src="man/figures/hex-DBvieweR.png" align="right" height="138" /></a>
+
+## a Database Management System for R <a href="https://munoztd0.shinyapps.io/DbVieweR
 
 <!-- badges: start -->
 
@@ -11,7 +13,10 @@ status](https://www.r-pkg.org/badges/version/dplyr)](https://cran.r-project.org/
 [![Codecov test
 coverage](https://codecov.io/gh/tidyverse/dplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dplyr?branch=main) -->
 <!-- badges: end -->
-
+<br>
+<br>
+<br>
+<br>
 
 # Overview
 
