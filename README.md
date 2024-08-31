@@ -1,9 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# DBvieweR: "><img src="man/figures/hex-DBvieweR.png" align="right" height="138" /></a>
+# DBvieweR "<a href="https://munoztd0.shinyapps.io/DbVieweR><img src="man/figures/hex-DBvieweR.png" align="right" height="138" /></a>
 
-## a Database Management System for R <a href="https://munoztd0.shinyapps.io/DbVieweR
+## A modern Database Management System for R 
 
 <!-- badges: start -->
 
