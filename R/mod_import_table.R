@@ -72,10 +72,10 @@ mod_import_table_server <- function(id, table_names) {
       import_status()
     })
   })
-}  
-    
+}
+
 ## To be copied in the UI
 # mod_import_table_ui("import_table_1")
-    
+
 ## To be copied in the server
 # mod_import_table_server("import_table_1")
