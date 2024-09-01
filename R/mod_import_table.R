@@ -24,7 +24,6 @@ mod_import_table_ui <- function(id) {
 #'
 #' @importFrom shiny moduleServer reactiveVal
 #' @importFrom  readxl read_excel
-#' @importFrom readr read_csv
 
 # Server Function
 mod_import_table_server <- function(id, table_names) {
@@ -39,7 +38,7 @@ mod_import_table_server <- function(id, table_names) {
       tryCatch({
         # Read the file
         if (tools::file_ext(input$file$datapath) == "csv") {
-          df <- readr::read_csv(input$file$datapath)
+          df <- read.csv(input$file$datapath, stringsAsFactors = FALSE)
         } else {
           df <- readxl::read_excel(input$file$datapath)
         }
@@ -72,10 +71,10 @@ mod_import_table_server <- function(id, table_names) {
       import_status()
     })
   })
-}
-
+}  
+    
 ## To be copied in the UI
 # mod_import_table_ui("import_table_1")
-
+    
 ## To be copied in the server
 # mod_import_table_server("import_table_1")
