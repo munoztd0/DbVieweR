@@ -32,6 +32,7 @@ app_server <- function(input, output, session) {
 
   loaded_view_table <- FALSE
   loaded_update_table <- FALSE
+  loaded_import_table <- FALSE
   loaded_about <- FALSE
 
   observeEvent(input$sidebarmenu, {
@@ -45,6 +46,11 @@ app_server <- function(input, output, session) {
     if(input$sidebarmenu == "update_table" & !loaded_update_table){
       loaded_update_table <<- TRUE
       mod_update_table_server("update_table_1", table_names)
+    }
+
+    if(input$sidebarmenu == "import_table" & !loaded_import_table){
+      loaded_import_table <<- TRUE
+      mod_import_table_server("import_table_1", table_names)
     }
 
     if(input$sidebarmenu == "about" & !loaded_about){

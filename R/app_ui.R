@@ -30,8 +30,8 @@ app_ui <- function(request) {
                    sidebarMenu(
                      id = "sidebarmenu",  # Add this line
                      menuItem("View Tables", tabName = "view_table", icon = icon("search")),
-                     #menuItem("Create Tables", tabName = "create_table", icon = icon("plus-square")),
                      menuItem("Update Tables", tabName = "update_table", icon = icon("exchange-alt")),
+                     menuItem("Import Tables", tabName = "import_table", icon = icon("plus-square")),
                      #menuItem("Insert Entries", tabName = "insert_value", icon = icon("edit")),
                      #modify entries menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
                      #Insert tbale form excel menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
@@ -79,20 +79,15 @@ app_ui <- function(request) {
                 mod_view_table_ui("view_table_1")
               ),
               # # Second Tab
-              # tabItem(
-              #   tabName = 'del_table',
-              #   uiOutput("tab2UI")
-              # ),
-              # # Third Tab
               tabItem(
                 tabName = 'update_table',
                 mod_update_table_ui("update_table_1")
               ),
-              # # fourth Tab
-              # tabItem(
-              #   tabName = 'create_table',
-              #   uiOutput("tab4UI")
-              # ),
+              # # Third Tab
+              tabItem(
+                tabName = 'import_table',
+                mod_import_table_ui("import_table_1")
+              ),
               # # Fifth Tab
               # tabItem(
               #   tabName = 'insert_value',
@@ -107,7 +102,7 @@ app_ui <- function(request) {
           )
         )
 
-			#tabItem(tabName = "trades_tab", tradesUI("trades_tab_ui_1"))
+
 
 			)
 }
