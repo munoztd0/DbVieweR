@@ -43,7 +43,7 @@ mod_view_table_ui <- function(id){
 #'
 #' @import dplyr
 #' @importFrom DT renderDT datatable
-#' @importFrom openxlsx createWorkbook saveWorkbook
+#' @importFrom readr write_excel_csv
 #'
 #' @noRd 
 #' 
@@ -80,19 +80,18 @@ mod_view_table_server <- function(id, table_names){
       reactiveValuesToList(res_auth)
     })
 
-    # Hide extraOutput only when condition is TRUE
+    # Hide extraOutput only when credentials of level 0
     observe({
       if (!is.null(creds_reactive()$level) && creds_reactive()$level > 0 ) {
-        output$download <- 
-          downloadHandler(
-            filename = paste0("data_", input$sel_table_1, ".xlsx"),
-            content = function(file){
-              db <- dplyr::tbl(conn, input$sel_table_1)  |> collect()
-              wb <- openxlsx::createWorkbook()
-              style_my_workbook(wb, db[input[["sel_table_view_rows_all"]], ], "Sheet1", TRUE)
-              openxlsx::saveWorkbook(wb, file, overwrite = TRUE)
-            }
-          )
+        output$download <- downloadHandler(
+          filename = function() {
+            paste0("data_", input$sel_table_1, ".xlsx")
+          },
+          content = function(file) {
+            db <- dplyr::tbl(conn, input$sel_table_1) |> collect()
+            readr::write_excel_csv(db, file)
+          }
+        )
       } 
     })
   })

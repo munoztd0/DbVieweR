@@ -3,9 +3,10 @@
 # Set the language for the app and add the labels for the login page
 shinymanager::set_labels(
    language = "en",
-  "Please authenticate" = "Please authenticate",
-  "Username:" = "Username: user1",
-  "Password:" = "Password: pass1",
+  "Please authenticate" = "Demo credentials are: <br>  <br>
+  user: shiny <br>  pwd: demo ",
+  "Username:" = "Username:",
+  "Password:" = "Password:",
   "Login" = "Login"
 )
 
@@ -15,9 +16,9 @@ shinymanager::set_labels(
 
 # data.frame with credentials info
 credentials <- data.frame(
-  user = c("user1", "user2"),
-  password = c("pass1", "pass2"), 
-  password_hash = sapply(c("pass1", "pass2"), sodium::password_store), 
+  user = c("shiny", "user2"),
+  password = c("demo", "pass2"), 
+  password_hash = sapply(c("demo", "pass2"), sodium::password_store), 
   permissions = c("admin", "manager"),
   stringsAsFactors = FALSE,
   level = c(2, 0)
@@ -30,9 +31,9 @@ data(starwars2, envir=environment())
 
 
 
-# remove on inactivity
+# close session if inactivity
 inactivity <- "function idleTimer() {
-var t = setTimeout(logout, 120000);
+var t = setTimeout(logout, 120000); // time is in milliseconds (2 minutes)
 window.onmousemove = resetTimer; // catches mouse movements
 window.onmousedown = resetTimer; // catches mouse movements
 window.onclick = resetTimer;     // catches mouse clicks
