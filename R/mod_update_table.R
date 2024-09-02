@@ -8,7 +8,6 @@
 #'
 #' @importFrom shiny NS tagList 
 #' 
-
 mod_update_table_ui <- function(id){
 
   ns <- NS(id)
@@ -31,34 +30,15 @@ mod_update_table_ui <- function(id){
                            label = "Rename Table", 
                            style="color: #fff; background-color: #337ab7; border-color: #2e6da4; display: right-align" )
             )
-        )#,
-        # box(title = 'Rename Column', width = 4, solidHeader = TRUE, status = "primary",
-        #     uiOutput(ns('sel_table_2_ui')),  # Use uiOutput here
-        #     wellPanel(
-        #       selectInput(
-        #         inputId = ns('sel_col_3'),
-        #         label = 'Select Column:',
-        #         choices = NULL),
-        #       textInput(inputId = ns("rnm_col_to"),
-        #                 label = "Rename the Column:"),
-        #       actionButton(inputId = ns("rename_col"),
-        #                    label = "Rename Column", 
-        #                    style="color: #fff; background-color: #337ab7; border-color: #2e6da4"
-        #       )
-        #     )
-        # ),
-        # box(title = 'Add Column', width = 4, solidHeader = TRUE, status = "primary",
-        #    uiOutput(ns('sel_table_3_ui')),  # Use uiOutput here
-        #    wellPanel(
-        #      textInput(inputId = ns('add_col_name'), label = "Add Column"),
-        #      selectInput(inputId = ns("add_col_type"), label = "Add Column Type", 
-        #                  choices = c("NUMERIC","VARCHAR(255)","BOOLEAN")
-        #      ),
-        #      actionButton(inputId = ns("add_col"),
-        #                   label = "Add Column",
-        #                   style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
-        #    )
-        # )
+        ),
+        box(title = 'Delete Table', width = 4, solidHeader = TRUE, status = "danger",
+            uiOutput(ns('sel_table_4_ui')),  # Use uiOutput here
+            wellPanel(
+              actionButton(inputId = ns("delete_table"),
+                           label = "Delete Table",
+                           style="color: #fff; background-color: #d9534f; border-color: #d43f3a; display: right-align")
+            )
+        )
       )
     )
   )
@@ -96,7 +76,7 @@ mod_update_table_server <- function(id, table_names){
       ))
     })
 
-    # Rest of the code...
+    
   })
 }
 

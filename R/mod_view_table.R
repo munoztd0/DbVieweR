@@ -80,7 +80,7 @@ mod_view_table_server <- function(id, table_names){
       reactiveValuesToList(res_auth)
     })
 
-    # Hide extraOutput only when condition is TRUE
+    # Hide extraOutput only when credentials of level 0
     observe({
       if (!is.null(creds_reactive()$level) && creds_reactive()$level > 0 ) {
         output$download <- downloadHandler(

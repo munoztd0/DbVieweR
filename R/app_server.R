@@ -33,7 +33,7 @@ app_server <- function(input, output, session) {
   loaded_view_table <- FALSE
   loaded_update_table <- FALSE
   loaded_import_table <- FALSE
-  loaded_about <- FALSE
+  loaded_delete_table <- FALSE
 
   observeEvent(input$sidebarmenu, {
     #LAZY LOADING
@@ -52,10 +52,15 @@ app_server <- function(input, output, session) {
       loaded_import_table <<- TRUE
       mod_import_table_server("import_table_1", table_names)
     }
+    
+    if(input$sidebarmenu == "import_table" & !loaded_import_table){
+      loaded_import_table <<- TRUE
+      mod_import_table_server("import_table_1", table_names)
+    }
 
-    if(input$sidebarmenu == "about" & !loaded_about){
-      loaded_about <<- TRUE
-      # mod_about_server("about_1")
+    if(input$sidebarmenu == "delete_table" & !loaded_delete_table){
+      loaded_delete_table <<- TRUE
+      mod_del_table_server("delete_table_1", table_names)
     }
   })
   # ...
