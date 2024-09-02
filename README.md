@@ -12,6 +12,7 @@ status](https://www.r-pkg.org/badges/version/dplyr)](https://cran.r-project.org/
 [![R-CMD-check](https://github.com/tidyverse/dplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/dplyr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/tidyverse/dplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dplyr?branch=main) -->
+[![R-CMD-check](https://github.com/munoztd0/DbVieweR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/munoztd0/DbVieweR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 <br>
 <br>
