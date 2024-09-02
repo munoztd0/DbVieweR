@@ -46,8 +46,16 @@ mod_update_table_ui <- function(id){
 
 
 #' update_table Server Functions
+#'
+#' @description A table can be renamed or deleted.
+#'
+#' @param id 
+#' @import DBI
+#' @importFrom shiny showModal modalDialog
+#'
+#' @noRd
 mod_update_table_server <- function(id, table_names){
-  moduleServer( id, function(input, output, session){
+  moduleServer(id, function(input, output, session){
     ns <- session$ns
 
     conn <- golem::get_golem_options("conn_SQL_Lite")
@@ -64,6 +72,11 @@ mod_update_table_server <- function(id, table_names){
       selectInput(ns("sel_table_1"), "Select table", choices = table_names())
     })
 
+    # Render UI for table selection in 'Delete Table' box
+    output$sel_table_4_ui <- renderUI({
+      selectInput(ns("sel_table_4"), "Select table", choices = table_names())
+    })
+
     observeEvent(input$rename_table, {
       req(input$rnm_table_to)
       DBI::dbExecute(conn, paste0('ALTER TABLE ', input$sel_table_1, ' RENAME TO ', input$rnm_table_to))
@@ -76,12 +89,16 @@ mod_update_table_server <- function(id, table_names){
       ))
     })
 
-    
+    observeEvent(input$delete_table, {
+      req(input$sel_table_4)
+      DBI::dbExecute(conn, paste0('DROP TABLE ', input$sel_table_4))
+      # Update table_names reactive value
+      table_names(DBI::dbListTables(conn))
+      showModal(modalDialog(
+        title = "Success",
+        "Table deleted successfully!",
+        easyClose = TRUE
+      ))
+    })
   })
 }
-
-## To be copied in the UI
-# mod_update_table_ui("update_table_1")
-    
-## To be copied in the server
-# mod_update_table_server("update_table_1")
