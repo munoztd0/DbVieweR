@@ -63,6 +63,11 @@ app_server <- function(input, output, session) {
       loaded_delete_rows <<- TRUE
       mod_del_rows_server("delete_rows_1", table_names)
     }
+
+    if(input$sidebarmenu == "create_report" & !loaded_delete_rows){
+      loaded_delete_rows <<- TRUE
+      mod_del_rows_server("delete_rows_1", table_names)
+    }
   })
   # ...
 }

@@ -17,3 +17,4 @@ $run_dev.*
 ^doc$
 ^Meta$
 ^\.github$
+debug.r

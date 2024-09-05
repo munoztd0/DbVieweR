@@ -48,7 +48,7 @@ app_ui <- function(request) {
     dashboardBody(
             title = HTML(glue::glue('DbVieweR')),
             shinyjs::useShinyjs(),
-            tags$head(tags$style(".table{margin: 0 auto;}"),
+            tags$head(
                       tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js",
                                   type="text/javascript")#,
                       #golem::add_js_file("returnClick.js")
@@ -133,7 +133,7 @@ golem_add_external_resources <- function() {
   )
 
   tags$head(
-    favicon(ext = 'png'),
+    favicon(),
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "DbVieweR"
@@ -142,3 +142,6 @@ golem_add_external_resources <- function() {
     # for example, you can add shinyalert::useShinyalert()
   )
 }
+
+
+#TODO: Deal with favicon
