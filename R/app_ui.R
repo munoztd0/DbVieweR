@@ -34,7 +34,8 @@ app_ui <- function(request) {
                      menuItem("Import Tables", tabName = "import_table", icon = icon("plus-square")),
                      #menuItem("Insert Entries", tabName = "insert_value", icon = icon("edit")),
                      #modify entries menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
-                     menuItem("Delete Rows", tabName = "delete_table", icon = icon("trash-alt")),
+                     menuItem("Insert Entries", tabName = "insert_rows", icon = icon("plus-square")),
+                     menuItem("Delete Rows", tabName = "delete_rows", icon = icon("trash-alt")),
                      #menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
                      menuItem("About", tabName = "about", icon = icon("info-circle"))
                    )
@@ -73,27 +74,32 @@ app_ui <- function(request) {
             #uiOutput("user_table"),
 
             tabItems(
-              # First Tab
+              # #
               tabItem(
                 tabName = 'view_table',
                 mod_view_table_ui("view_table_1")
               ),
-              # # Second Tab
+              # # 
               tabItem(
                 tabName = 'update_table',
                 mod_update_table_ui("update_table_1")
               ),
-              # # Third Tab
+              # # 
               tabItem(
                 tabName = 'import_table',
                 mod_import_table_ui("import_table_1")
               ),
-              # # Third Tab
+              # # 
               tabItem(
-                tabName = 'delete_table',
-                mod_del_table_ui("delete_table_1")
+                tabName = 'insert_rows',
+                mod_insert_rows_ui("insert_rows_1")
               ),
-              # # Fifth Tab
+              # # 
+              tabItem(
+                tabName = 'delete_rows',
+                mod_del_rows_ui("delete_rows_1")
+              ),
+              # # 
               # tabItem(
               #   tabName = 'insert_value',
               #   uiOutput("tab5UI")

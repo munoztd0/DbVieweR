@@ -33,7 +33,8 @@ app_server <- function(input, output, session) {
   loaded_view_table <- FALSE
   loaded_update_table <- FALSE
   loaded_import_table <- FALSE
-  loaded_delete_table <- FALSE
+  loaded_insert_rows <- FALSE
+  loaded_delete_rows <- FALSE
 
   observeEvent(input$sidebarmenu, {
     #LAZY LOADING
@@ -53,14 +54,14 @@ app_server <- function(input, output, session) {
       mod_import_table_server("import_table_1", table_names)
     }
     
-    if(input$sidebarmenu == "import_table" & !loaded_import_table){
-      loaded_import_table <<- TRUE
-      mod_import_table_server("import_table_1", table_names)
+    if(input$sidebarmenu == "insert_rows" & !loaded_insert_rows){
+      loaded_insert_rows <<- TRUE
+      mod_insert_rows_server("insert_rows_1", table_names)
     }
 
-    if(input$sidebarmenu == "delete_table" & !loaded_delete_table){
-      loaded_delete_table <<- TRUE
-      mod_del_table_server("delete_table_1", table_names)
+    if(input$sidebarmenu == "delete_rows" & !loaded_delete_rows){
+      loaded_delete_rows <<- TRUE
+      mod_del_rows_server("delete_rows_1", table_names)
     }
   })
   # ...

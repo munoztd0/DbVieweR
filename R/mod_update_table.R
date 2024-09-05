@@ -16,8 +16,8 @@ mod_update_table_ui <- function(id){
     fluidPage(
       fluidRow( 
         box(width = 12,
-            title = "Note:",
-            "You can only alter tables that are created in the ",
+            # title = "Note:",
+            # "You can only alter tables that are created in the ",
             tags$i("Create Tables "),
             "tab. If you find the dropdown menu empty, this means currently no table can be altered.",
             style = "font-size: 15px;"),

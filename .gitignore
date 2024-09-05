@@ -13,3 +13,4 @@ misc/
 .quarto
 /doc/
 /Meta/
+debug.r

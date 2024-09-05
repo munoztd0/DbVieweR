@@ -8,7 +8,7 @@
 #'
 #' @importFrom shiny NS tagList 
 #' @importFrom DT DTOutput
-mod_del_table_ui <- function(id){
+mod_del_rows_ui <- function(id){
   ns <- NS(id)
   tagList(
     fluidPage(
@@ -39,7 +39,7 @@ mod_del_table_ui <- function(id){
 #' @import dplyr
 #' @importFrom DT renderDT datatable replaceData dataTableProxy
 #' @importFrom shiny showNotification reactive
-mod_del_table_server <- function(id, table_names){
+mod_del_rows_server <- function(id, table_names){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
@@ -166,7 +166,7 @@ mod_del_table_server <- function(id, table_names){
 }
 
 ## To be copied in the UI
-# mod_del_table_ui("del_table_1")
+# mod_del_rows_ui("del_table_1")
 
 ## To be copied in the server
-# mod_del_table_server("del_table_1", table_names)
+# mod_del_rows_server("del_table_1", table_names)
