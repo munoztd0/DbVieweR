@@ -46,10 +46,22 @@ mod_import_table_server <- function(id, table_names) {
         # Validate table name
         table_name <- input$table_name
         if (!grepl("^[a-zA-Z][a-zA-Z0-9_]*$", table_name)) {
-          stop("Invalid table name. Use only letters, numbers, and underscores, starting with a letter.")
+          showModal(modalDialog(
+            title = "Error",
+            "Invalid table name. Use only letters, numbers, and underscores, starting with a letter.",
+            easyClose = TRUE
+          ))
+        
+        return()
         }
         if (tolower(table_name) %in% tolower(table_names())) {
-          stop("Table name already exists. Please choose a different name.")
+          showModal(modalDialog(
+            title = "Error",
+            "Table name already exists. Please choose a different name.",
+            easyClose = TRUE
+          ))
+        #
+        return()
         }
         
         # Get database connection
@@ -78,3 +90,5 @@ mod_import_table_server <- function(id, table_names) {
     
 ## To be copied in the server
 # mod_import_table_server("import_table_1")
+
+

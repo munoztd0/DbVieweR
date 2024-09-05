@@ -9,7 +9,7 @@ app_server <- function(input, output, session) {
   res_auth <- shinymanager::secure_server(check_credentials = shinymanager::check_credentials(credentials))
 
   
-  onStop(function() cat("Session stopped\n"))
+  onStop(function() DBI::dbDisconnect(conn))
   
   
   # disconnected <- sever::sever_default(
@@ -64,5 +64,5 @@ app_server <- function(input, output, session) {
       mod_del_rows_server("delete_rows_1", table_names)
     }
   })
-  # ...
+
 }

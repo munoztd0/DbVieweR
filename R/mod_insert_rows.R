@@ -94,13 +94,19 @@ mod_insert_rows_server <- function(id, table_names) {
         # Convert valid_values to an unnamed list
         param_list <- as.list(unname(valid_values))
         result <- dbExecute(conn, query, params = param_list)
-        output$insert_status <- renderText("Row inserted successfully!")
+        showModal(modalDialog(
+            title = "Success",
+            "Row inserted successfully!",
+            easyClose = TRUE
+        ))
       }, error = function(e) {
-        output$insert_status <- renderText(paste("Error inserting row:", e$message))
+         showModal(modalDialog(
+            title = "Failure",
+            paste("Error inserting row:", e$message),
+            easyClose = TRUE
+        ))
       })
     })
   })
 }
 
-
-#TODO: add notification box !

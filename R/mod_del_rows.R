@@ -133,16 +133,30 @@ mod_del_rows_server <- function(id, table_names){
           refresh_trigger(refresh_trigger() + 1)
           
           # Show a notification
-          showNotification(paste(deleted_count, "row(s) deleted successfully"), type = "message")
+           showModal(modalDialog(
+            title = "Success",
+            paste(deleted_count, "row(s) deleted successfully"),
+            easyClose = TRUE
+        ))
+         
           
         }, error = function(e) {
           # Rollback the transaction if an error occurs
           DBI::dbExecute(conn, "ROLLBACK")
-          showNotification(paste("Error deleting rows:", e$message), type = "error")
-          message(paste("Error:", e$message))  # Log the error
+          showModal(modalDialog(
+            title = "Failure",
+            paste("Error deleting rows:", e$message),
+            easyClose = TRUE
+          ))
+  
         })
       } else {
-        showNotification("No rows selected for deletion", type = "warning")
+        showModal(modalDialog(
+            title = "Warning",
+            "No rows selected for deletion",,
+            easyClose = TRUE
+          ))
+        
       }
     })
 
