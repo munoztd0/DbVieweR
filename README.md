@@ -13,6 +13,9 @@ status](https://www.r-pkg.org/badges/version/dplyr)](https://cran.r-project.org/
 [![Codecov test
 coverage](https://codecov.io/gh/tidyverse/dplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dplyr?branch=main) -->
 [![R-CMD-check](https://github.com/munoztd0/DbVieweR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/munoztd0/DbVieweR/actions/workflows/R-CMD-check.yaml)
+
+[![Lifecycle: stable](lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+
 <!-- badges: end -->
 <br>
 <br>
@@ -57,9 +60,7 @@ devtools::install_github("munoztd0/DbVieweR")
   
 Please note that the DbVieweR project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
-  <!-- badges: start -->
-  [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-  <!-- badges: end -->
+
 
 
 ## TODO
