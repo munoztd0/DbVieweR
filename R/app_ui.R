@@ -32,11 +32,8 @@ app_ui <- function(request) {
                      menuItem(" View Tables", tabName = "view_table", icon = icon("search")),
                      menuItem(" Update Tables", tabName = "update_table", icon = icon("exchange-alt")),
                      menuItem(" Import Tables", tabName = "import_table", icon = icon("file-import")),
-                     #menuItem(" Insert Entries", tabName = "insert_value", icon = icon("edit")),
-                     #modify entries menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
                      menuItem(" Insert Entries", tabName = "insert_rows", icon = icon("plus-square")),
                      menuItem(" Delete Rows", tabName = "delete_rows", icon = icon("trash-alt")),
-                     #menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
                      menuItem(" About", tabName = "about", icon = icon("info-circle"))
                    )
   ),
