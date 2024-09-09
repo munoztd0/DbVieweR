@@ -38,7 +38,7 @@ mod_import_table_server <- function(id, table_names) {
       tryCatch({
         # Read the file
         if (tools::file_ext(input$file$datapath) == "csv") {
-          df <- read.csv(input$file$datapath, stringsAsFactors = FALSE)
+          df <- read.csv(input$file$datapath, stringsAsFactors = FALSE, row.names = NULL)
         } else {
           df <- readxl::read_excel(input$file$datapath)
         }
