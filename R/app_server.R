@@ -35,6 +35,7 @@ app_server <- function(input, output, session) {
   loaded_import_table <- FALSE
   loaded_insert_rows <- FALSE
   loaded_delete_rows <- FALSE
+  loaded_graph_table <- FALSE
 
   observeEvent(input$sidebarmenu, {
     #LAZY LOADING
@@ -67,6 +68,11 @@ app_server <- function(input, output, session) {
     if(input$sidebarmenu == "create_report" & !loaded_delete_rows){
       loaded_delete_rows <<- TRUE
       mod_del_rows_server("delete_rows_1", table_names)
+    }
+
+    if(input$sidebarmenu == "graph_table" & !loaded_graph_table){
+      loaded_graph_table <<- TRUE
+      mod_graph_table_server("graph_table_1", table_names)
     }
   })
   # ...
