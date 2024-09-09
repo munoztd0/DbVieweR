@@ -29,15 +29,15 @@ app_ui <- function(request) {
                    div(textOutput("welcome"), style = "padding: 20px"),
                    sidebarMenu(
                      id = "sidebarmenu",  # Add this line
-                     menuItem("View Tables", tabName = "view_table", icon = icon("search")),
-                     menuItem("Update Tables", tabName = "update_table", icon = icon("exchange-alt")),
-                     menuItem("Import Tables", tabName = "import_table", icon = icon("plus-square")),
-                     #menuItem("Insert Entries", tabName = "insert_value", icon = icon("edit")),
+                     menuItem(" View Tables", tabName = "view_table", icon = icon("search")),
+                     menuItem(" Update Tables", tabName = "update_table", icon = icon("exchange-alt")),
+                     menuItem(" Import Tables", tabName = "import_table", icon = icon("file-import")),
+                     #menuItem(" Insert Entries", tabName = "insert_value", icon = icon("edit")),
                      #modify entries menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
-                     menuItem("Insert Entries", tabName = "insert_rows", icon = icon("plus-square")),
-                     menuItem("Delete Rows", tabName = "delete_rows", icon = icon("trash-alt")),
+                     menuItem(" Insert Entries", tabName = "insert_rows", icon = icon("plus-square")),
+                     menuItem(" Delete Rows", tabName = "delete_rows", icon = icon("trash-alt")),
                      #menuItem("Delete Tables", tabName = "del_table", icon = icon("trash-alt")),
-                     menuItem("About", tabName = "about", icon = icon("info-circle"))
+                     menuItem(" About", tabName = "about", icon = icon("info-circle"))
                    )
   ),
 		# menuItem("Trading", icon = icon("chart-line", verify_fa = FALSE), startExpanded = F,
