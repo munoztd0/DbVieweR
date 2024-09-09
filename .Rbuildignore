@@ -18,3 +18,4 @@ $run_dev.*
 ^Meta$
 ^\.github$
 debug.r
+test_db_file

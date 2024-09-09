@@ -21,12 +21,13 @@ run_app <- function(onStart = NULL,
   onStart = function() {
     cat("Doing application setup\n")
     
-    conn = create_conn()
+
     
     onStop(function() {
       cat("Doing application cleanup\n")
-      #remove temp files
-      unlink("test_db_file")
+
+      #unlink("test_db_file")
+      #TODO: ask to remove temp files and create a new one
       
       DBI::dbDisconnect(conn)
     })
