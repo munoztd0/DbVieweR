@@ -31,6 +31,8 @@ get_sessionids_from_db <- function(conn = db, expiry = cookie_expiry) {
     filter(login_time > now() - days(expiry))
 }
 
+# TODO: Remove unused functions
+
 
 
 

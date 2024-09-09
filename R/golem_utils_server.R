@@ -61,3 +61,6 @@ drop_nulls <- function(x) {
 #' @noRd
 rv <- function(...) shiny::reactiveValues(...)
 rvtl <- function(...) shiny::reactiveValuesToList(...)
+
+
+# TODO: Remove unused functions
