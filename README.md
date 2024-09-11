@@ -13,7 +13,6 @@ status](https://www.r-pkg.org/badges/version/dplyr)](https://cran.r-project.org/
 [![Codecov test
 coverage](https://codecov.io/gh/tidyverse/dplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dplyr?branch=main) -->
 [![R-CMD-check](https://github.com/munoztd0/DbVieweR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/munoztd0/DbVieweR/actions/workflows/R-CMD-check.yaml)
-
 [![Lifecycle: stable](lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
 <!-- badges: end -->

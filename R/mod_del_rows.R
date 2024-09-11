@@ -57,7 +57,7 @@ mod_del_rows_server <- function(id, table_names){
     table_data <- reactive({
       req(input$sel_table)
       refresh_trigger()  # Depend on the refresh trigger
-      dplyr::tbl(conn, input$sel_table) %>% collect()
+      dplyr::tbl(conn, input$sel_table) |> collect()
     })
 
     # Show table

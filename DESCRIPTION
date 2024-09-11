@@ -1,7 +1,7 @@
 Package: DbVieweR
 Title: A Shiny Database Management Dashboard
-Version: 0.1.0
-Authors@R: person('David', 'Munoz tord', email = 'david.munoztord@mailbox.org', role = c('cre', 'aut'))
+Version: 0.1.1
+Authors@R: person('David', 'Munoz Tord', email = 'david.munoztord@mailbox.org', role = c('cre', 'aut'))
 Description: This Shiny app simulates a database management system featuring functions like login/logout, save/create/delete tables, add/rename columns.
 License: MIT + file LICENSE
 Imports: 
@@ -15,6 +15,7 @@ Imports:
     sodium,
     shinydashboard,
     shinydashboardPlus,
+    shinycssloaders,
     shinymanager,
     shinythemes,
     shinyjs,
@@ -36,4 +37,4 @@ Language: en-US
 URL: https://github.com/munoztd0/DbVieweR
 BugReports: https://github.com/munoztd0/DbVieweR/issues
 Depends: 
-    R (>= 3.6)
+    R (>= 4.1)

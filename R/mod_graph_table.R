@@ -22,7 +22,7 @@ mod_graph_table_ui <- function(id){
                       uiOutput(ns('sel_table_1_ui')),
                       h4(strong("Interactive Data Visualization")),
                       br(),
-                      uiOutput(ns('dynamic_gwalkr'))
+                      shinycssloaders::withSpinner(uiOutput(ns('dynamic_gwalkr')))
                )
              )
       )
@@ -57,7 +57,7 @@ mod_graph_table_server <- function(id, table_names){
       print(paste("Fetching data for table:", input$sel_table_1))
       req(input$sel_table_1)
       withProgress(message = 'Fetching data...', value = 0, {
-        data <- dplyr::tbl(conn, input$sel_table_1) %>% collect()
+        data <- dplyr::tbl(conn, input$sel_table_1) |> collect()
         current_data(data)
         print(paste("Data fetched for table:", input$sel_table_1))
       })

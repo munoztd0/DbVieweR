@@ -40,9 +40,9 @@ mod_about_ui <- function(id){
               br(),
               tags$a(icon("twitter"), href = "https://x.com/tord_munoz", " @tord_munoz"),
               br(),
-              tags$a(icon("github"), href = "https://github.com/munoztd0", " Personal GitHub"),
+              tags$a(icon("github"), href = "https://github.com/munoztd0", " GitHub"),
               br(),
-              tags$a(icon("globe"), href = "https://david-munoztord.com", " Personal Website")
+              tags$a(icon("globe"), href = "https://david-munoztord.com", " Website")
             )
         ),
         

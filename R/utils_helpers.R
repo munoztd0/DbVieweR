@@ -9,7 +9,7 @@
 #' @importFrom sodium password_store
 
 add_sessionid_to_db <- function(user, sessionid, conn = db) {
-  tibble(user = user, sessionid = sessionid, login_time = as.character(now())) %>%
+  tibble(user = user, sessionid = sessionid, login_time = as.character(now())) |>
     dbWriteTable(conn, "sessionids", ., append = TRUE)
 }
 
@@ -25,9 +25,9 @@ add_sessionid_to_db <- function(user, sessionid, conn = db) {
 #' 
 # 
 get_sessionids_from_db <- function(conn = db, expiry = cookie_expiry) {
-  dbReadTable(conn, "sessionids") %>%
-    mutate(login_time = ymd_hms(login_time)) %>%
-    as_tibble() %>%
+  dbReadTable(conn, "sessionids") |>
+    mutate(login_time = ymd_hms(login_time)) |>
+    as_tibble() |>
     filter(login_time > now() - days(expiry))
 }
 

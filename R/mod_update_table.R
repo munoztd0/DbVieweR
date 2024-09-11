@@ -171,7 +171,7 @@ mod_update_table_server <- function(id, table_names){
         df <- DBI::dbReadTable(conn, input$sel_table_3)
         
         # Create the new column using dplyr::mutate
-        df <- df %>%
+        df <- df |>
           dplyr::mutate(!!input$new_column_name := eval(parse(text = input$new_column_expression)))
         
         # Write the updated dataframe back to the database

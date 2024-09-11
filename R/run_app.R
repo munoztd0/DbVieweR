@@ -35,7 +35,7 @@ run_app <- function(onStart = NULL,
   
   with_golem_options(
     app = shinyApp(
-      ui = shinymanager::secure_app(app_ui, head_auth = tags$script(inactivity), theme = shinythemes::shinytheme("flatly")),
+      ui = shinymanager::secure_app(app_ui, head_auth = tags$script(delayButton), theme = shinythemes::shinytheme("flatly")),
       server = app_server,
       onStart = onStart,
       options = options,

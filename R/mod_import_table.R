@@ -14,7 +14,6 @@ mod_import_table_ui <- function(id) {
               accept = c(".csv", ".xlsx", ".xls")),
     textInput(ns("table_name"), "Enter table name for import:"),
     actionButton(ns("import"), "Import File"),
-    verbatimTextOutput(ns("import_status"))
   )
 }
 
@@ -72,16 +71,23 @@ mod_import_table_server <- function(id, table_names) {
         
         # Update table names
         table_names(DBI::dbListTables(conn))
-        
-        import_status("File imported successfully!")
+        # Show a notification
+           showModal(modalDialog(
+            title = "Success",
+            paste("File imported!"),
+            easyClose = TRUE
+        ))
       }, error = function(e) {
-        import_status(paste("Error:", e$message))
+        # Show a notification
+           showModal(modalDialog(
+            title = "Failure",
+            paste("Error:", e$message),
+            easyClose = TRUE
+        ))
       })
     })
 
-    output$import_status <- renderText({
-      import_status()
-    })
+    
   })
 }  
     

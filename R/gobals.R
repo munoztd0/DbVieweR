@@ -50,3 +50,33 @@ t = setTimeout(logout, 120000);  // time is in milliseconds (1000 is 1 second)
 }
 }
 idleTimer();"
+
+
+
+
+# Delay the login button for 400 ms after the enter key is pressed
+delayButton <- "pressbtn = function(){
+
+// click the log in button
+document.getElementById('auth-go_auth').click();
+};
+window.onload = function() {
+
+// password input field
+const field = document.getElementById('auth-user_pwd');
+
+// add a function that preempts the enter key press
+field.addEventListener('keydown',  
+function(e) {
+
+    if (e.keyCode == 13) {
+
+    // prevent sending the key event
+    e.preventDefault();
+   
+    // delay activating the login button for 400 ms. adjust time as needed
+    setTimeout(pressbtn,400);
+    };
+
+});
+}"

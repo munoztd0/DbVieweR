@@ -47,8 +47,7 @@ app_ui <- function(request) {
             shinyjs::useShinyjs(),
             tags$head(
                       tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js",
-                                  type="text/javascript")#,
-                      #golem::add_js_file("returnClick.js")
+                                  type="text/javascript")
             ),
 
             tabItems(
