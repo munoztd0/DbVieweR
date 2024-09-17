@@ -1,5 +1,5 @@
 rsconnect/
-*.db
+*.sqlite
 inst/doc
 *.Rproj
 *.Rhistory
@@ -14,4 +14,4 @@ misc/
 /doc/
 /Meta/
 debug.r
-test_db_file
+

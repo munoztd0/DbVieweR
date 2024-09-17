@@ -22,14 +22,14 @@
 create_conn <- function(){
   
 
-  if(file.exists("test_db_file")) {
-    # unlink("test_db_file")
-    db <- dbConnect(SQLite(), 'test_db_file')
+  if(file.exists("test_db_file.sqlite")) {
+    # unlink("test_db_file.sqlite")
+    db <- dbConnect(SQLite(), 'test_db_file.sqlite')
     print("DB already exists")
     
     print("Database already existsed")
   } else {
-    db <- dbConnect(SQLite(), 'test_db_file')
+    db <- dbConnect(SQLite(), 'test_db_file.sqlite')
     print("DB doesn't exist")
 
   }
@@ -240,7 +240,7 @@ mod_db_setup_server <- function(id){
     
     # Handle SQLite demo setup
     observeEvent(input$use_sqlite, {
-      details <- list(type = "sqlite", name = "test_db_file")
+      details <- list(type = "sqlite", name = "test_db_file.sqlite")
       connection_details(details)
       connection_status("Using SQLite demo setup. Click 'Save and Continue' to proceed.")
     })
@@ -336,7 +336,7 @@ run_app <- function(onStart = NULL,
   }, error = function(e) {
     print("here failed")
     showMessage("Failed to retrieve connection details. Using SQLite demo setup.")
-    #list(type = "sqlite", name = "test_db_file")  # Default to SQLite if retrieval fails
+    #list(type = "sqlite", name = "test_db_file.sqlite")  # Default to SQLite if retrieval fails
   })
   
   # Create database connection
@@ -347,8 +347,8 @@ run_app <- function(onStart = NULL,
   onStop(function() {
     cat("Doing application cleanup\n")
     DBI::dbDisconnect(conn)
-    # if (conn_details$type == "sqlite" && conn_details$name == "test_db_file") {
-    #   unlink("test_db_file")
+    # if (conn_details$type == "sqlite" && conn_details$name == "test_db_file.sqlite") {
+    #   unlink("test_db_file.sqlite")
     # }
   })
   
@@ -418,8 +418,8 @@ my_cleanup <- function() {
     if (!is.null(conn()) && credentials$type != "SQLite") {
       DBI::dbDisconnect(conn())
     }
-    if (credentials$type == "SQLite" && credentials$name == "test_db_file") {
-      unlink("test_db_file")
+    if (credentials$type == "SQLite" && credentials$name == "test_db_file.sqlite") {
+      unlink("test_db_file.sqlite")
     }
   }
 
@@ -427,14 +427,14 @@ my_cleanup <- function() {
 create_conn <- function(){
   
 
-  if(file.exists("test_db_file")) {
-    # unlink("test_db_file")
-    db <- dbConnect(SQLite(), 'test_db_file')
+  if(file.exists("test_db_file.sqlite")) {
+    # unlink("test_db_file.sqlite")
+    db <- dbConnect(SQLite(), 'test_db_file.sqlite')
     print("DB already exists")
     
     print("Database already existsed")
   } else {
-    db <- dbConnect(SQLite(), 'test_db_file')
+    db <- dbConnect(SQLite(), 'test_db_file.sqlite')
     print("DB doesn't exist")
 
   }
@@ -541,7 +541,7 @@ first_time_setup <- function() {
 #'
 #' @return A database connection object.
 create_conn_from_details <- function(details, password = NULL) {
-  if (details$type == "SQLite" && details$name == "test_db_file") {
+  if (details$type == "SQLite" && details$name == "test_db_file.sqlite") {
     return(create_conn())  # Use the existing function for SQLite demo
   }
   

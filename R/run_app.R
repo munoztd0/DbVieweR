@@ -47,33 +47,33 @@ run_app <- function(
   
   # Modify app_server to handle password input and connection
   modified_app_server <- function(input, output, session) {
-    if (credentials$type != "SQLite") {
-      observeEvent(input$ok, {
-        password <- input$db_password
-        removeModal()
-        
-        tryCatch({
-          db_conn <- create_conn_from_details(credentials, password)
-          conn(db_conn)
-          showNotification("Connected to database successfully", type = "message")
-        }, error = function(e) {
-          showNotification(paste("Connection failed:", e$message), type = "error")
-        })
+  if (credentials$type != "SQLite") {
+    observeEvent(input$ok, {
+      password <- input$db_password
+      
+      tryCatch({
+        db_conn <- create_conn_from_details(credentials, password)
+        conn(db_conn)
+        removeModal()  # Remove the modal after successful connection
+        showNotification("Connected to database successfully", type = "message")
+      }, error = function(e) {
+        showNotification(paste("Connection failed:", e$message), type = "error")
       })
-    } else {
-      # For SQLite demo, create connection without password
-      db_conn <- create_conn_from_details(credentials)
-      conn(db_conn)
-    }
-    
-    # Wait for connection to be established before running app_server
-    observe({
-      if (!is.null(conn())) {
-        app_server(input, output, session)
-      }
     })
+  } else {
+    # For SQLite demo, create connection without password
+    db_conn <- create_conn_from_details(credentials)
+    conn(db_conn)
   }
   
+  # Wait for connection to be established before running app_server
+  observe({
+    if (!is.null(conn())) {
+      app_server(input, output, session)
+    }
+  })
+}
+
   
   
   with_golem_options(

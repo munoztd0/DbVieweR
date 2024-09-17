@@ -18,7 +18,6 @@ $run_dev.*
 ^Meta$
 ^\.github$
 debug.r
-test_db_file
 .rscignore
 man/figures/Screenshot from 2024-08-31 14-26-34.png
-
+^.sqlite

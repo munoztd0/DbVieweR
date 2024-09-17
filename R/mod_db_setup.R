@@ -49,86 +49,34 @@ mod_db_setup_ui <- function(id){
 #' DB Setup Server Function
 #'
 #' @noRd 
-mod_db_setup_server <- function(id){
-  moduleServer(id, function(input, output, session){
-    ns <- session$ns
-    
-    # Reactive values to store connection details and status
-    connection_details <- reactiveVal(NULL)
-    connection_status <- reactiveVal(NULL)
-    
-    # Handle SQLite demo setup
-    observeEvent(input$use_sqlite, {
-      details <- list(type = "SQLite", name = "test_db_file")
-      connection_details(details)
-      connection_status("Using SQLite demo setup. Click 'Save and Continue' to proceed.")
-    })
-    
-    # Test custom database connection
-    observeEvent(input$test_connection, {
-      req(input$db_choice == "custom")
-      browser()
+modified_app_server <- function(input, output, session) {
+  if (credentials$type != "SQLite") {
+    observeEvent(input$ok, {
+      password <- input$db_password
+      
       tryCatch({
-        conn <- DBI::dbConnect(
-          eval(parse(text = install_db_backend(input$db_type))),
-          host = input$db_host,
-          port = as.integer(input$db_port),
-          dbname = input$db_name,
-          user = input$db_user,
-          password = input$db_password
-        )
-        DBI::dbDisconnect(conn)
-        showModal(modalDialog(
-            title = "Connection Status",
-            "Connection successful! Click 'Save and Continue' to proceed.",
-            easyClose = TRUE
-            ))
+        db_conn <- create_conn_from_details(credentials, password)
+        conn(db_conn)
+        
+        # Ensure modal is removed after successful connection
+        shiny::removeModal()
+        shiny::showNotification("Connected to database successfully", type = "message")
+        
       }, error = function(e) {
-        showModal(modalDialog(
-            title = "Connection Error",
-            paste("Connection failed:", e$message),
-            easyClose = TRUE
-            ))
+        shiny::showNotification(paste("Connection failed:", e$message), type = "error")
       })
     })
-    
-    # Save connection details
-    observeEvent(input$save_connection, {
-      if(input$db_choice == "custom") {
-        details <- list(
-          type = input$db_type,
-          host = input$db_host,
-          port = input$db_port,
-          name = input$db_name,
-          user = input$db_user
-        )
-        connection_details(details)
-        
-        if(input$store_credentials) {
-          tryCatch({
-            store_credentials(details, "app_config.sqlite")
-            connection_status("Credentials stored successfully! Setup complete.")
-          }, error = function(e) {
-            connection_status(paste("Failed to store credentials:", e$message))
-          })
-        } else {
-          connection_status("Setup complete. Credentials not stored.")
-        }
-      } else {
-        # Confirm SQLite setup
-        connection_status("SQLite demo setup confirmed. Setup complete.")
-      }
-    })
-    
-    # Display connection status
-    output$connection_status <- renderText({
-      connection_status()
-    })
-    
-    # Return reactive values to be used in main app
-    return(list(
-      connection_details = connection_details,
-      connection_status = connection_status
-    ))
+  } else {
+    # For SQLite demo, create connection without password
+    db_conn <- create_conn_from_details(credentials)
+    conn(db_conn)
+  }
+  
+  # Observe when connection is established and then run app_server
+  observe({
+    if (!is.null(conn())) {
+      req(conn())  # Ensure connection is not NULL
+      app_server(input, output, session)
+    }
   })
 }
