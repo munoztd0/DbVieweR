@@ -64,7 +64,7 @@ mod_import_table_server <- function(id, table_names) {
         }
         
         # Get database connection
-        conn <- golem::get_golem_options("conn_SQL_Lite")
+        conn <- golem::get_golem_options("conn")()
         
         # Write to database
         DBI::dbWriteTable(conn, table_name, df, overwrite = TRUE)

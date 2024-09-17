@@ -43,7 +43,7 @@ mod_del_rows_server <- function(id, table_names){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
-    conn <- golem::get_golem_options("conn_SQL_Lite")
+    conn <- golem::get_golem_options("conn")()
 
     # Render UI for table selection
     output$sel_table_ui <- renderUI({

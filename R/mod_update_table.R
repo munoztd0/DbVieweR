@@ -97,7 +97,7 @@ mod_update_table_server <- function(id, table_names){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
-    conn <- golem::get_golem_options("conn_SQL_Lite")
+    conn <- golem::get_golem_options("conn")()
 
     res_auth <- shinymanager::secure_server(check_credentials = shinymanager::check_credentials(credentials))
 

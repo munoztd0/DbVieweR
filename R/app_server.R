@@ -25,8 +25,8 @@ app_server <- function(input, output, session) {
 
       runif(1)
     })
-   conn <- golem::get_golem_options("conn_SQL_Lite")
-  
+   conn <- golem::get_golem_options("conn")()
+
   # Reactive value for table names
   table_names <- reactiveVal(DBI::dbListTables(conn))
 
